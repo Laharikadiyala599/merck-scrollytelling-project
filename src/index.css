@@ -403,3 +403,7 @@ footer {
 .dropdown-link:hover {
   text-decoration: underline;
 }
+.appendix-side-slide {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
