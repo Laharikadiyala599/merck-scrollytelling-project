@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { scenes } from "./data/scenes";
-import { siteConfig } from "./data/siteconfig";
+import { siteConfig } from "./data/siteConfig";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import IconRow from "./components/IconRow";
