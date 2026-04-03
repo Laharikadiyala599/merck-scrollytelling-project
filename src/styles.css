@@ -3883,3 +3883,243 @@ footer {
     height: 42px;
   }
 }
+/* FIX: FULL WIDTH MOBILE LIKE APPLE */
+@media (max-width: 768px) {
+
+  html, body, #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .app,
+  .page-shell,
+  .detail-page,
+  .seamless-shell,
+  .detail-shell {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  /* remove "card look" */
+  .seamless-shell,
+  .detail-shell {
+    box-shadow: none !important;
+  }
+
+  /* sections should go edge-to-edge */
+  .apple-hero-premium,
+  .apple-icon-section,
+  .apple-home-section,
+  footer {
+    max-width: 100% !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+/* MOBILE NAV FIX */
+@media (max-width: 768px) {
+
+  .apple-nav-items {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 6px;
+
+    /* smooth scroll like Apple */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    /* hide scrollbar */
+    scrollbar-width: none;
+  }
+
+  .apple-nav-items::-webkit-scrollbar {
+    display: none;
+  }
+
+  .apple-nav-item {
+    flex: 0 0 auto;
+    font-size: 13px;
+  }
+
+  /* prevent container shrinking */
+  .nav-left {
+    min-width: 0;
+    flex: 1;
+  }
+}
+.apple-nav-items {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+/* =========================================
+   REAL MOBILE NAV FIX
+========================================= */
+@media (max-width: 768px) {
+  .navbar.apple-navbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+    padding: 10px 12px !important;
+  }
+
+  .nav-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .apple-logo {
+    flex: 0 0 auto !important;
+  }
+
+  .apple-nav-items {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-left: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding-bottom: 2px !important;
+  }
+
+  .apple-nav-items::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .nav-item-wrap {
+    flex: 0 0 auto !important;
+  }
+
+  .apple-nav-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
+  }
+
+  .apple-nav-right {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  /* make voice button smaller on mobile */
+  .voice-toggle-btn {
+    padding: 6px 10px !important;
+    font-size: 11px !important;
+    min-height: 34px !important;
+  }
+
+  /* if dropdown opens, keep it usable */
+  .apple-nav-dropdown {
+    width: min(90vw, 300px) !important;
+    left: 0 !important;
+  }
+}
+/* =========================================
+   FINAL MOBILE CHART FIX — ALL PAGES
+========================================= */
+
+/* default chart safety */
+.chart-card,
+.premium-chart-card,
+.mck-chart-card {
+  overflow: hidden;
+}
+
+.chart-wrap,
+.premium-chart-wrap,
+.mck-chart-wrap {
+  width: 100%;
+}
+
+/* tablet + mobile */
+@media (max-width: 768px) {
+  .chart-card,
+  .premium-chart-card,
+  .mck-chart-card {
+    overflow: visible !important;
+    padding: 18px 16px 22px !important;
+    border-radius: 20px !important;
+  }
+
+  .chart-wrap,
+  .premium-chart-wrap,
+  .mck-chart-wrap {
+    height: 320px !important;
+    min-height: 320px !important;
+    overflow: visible !important;
+  }
+
+  .recharts-responsive-container {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .recharts-wrapper,
+  .recharts-surface {
+    overflow: visible !important;
+  }
+
+  .chart-header-row,
+  .mck-chart-header-row {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: stretch !important;
+  }
+
+  .chart-stat-badge,
+  .mck-chart-stat-badge {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .chart-title,
+  .premium-chart-title,
+  .mck-chart-title {
+    font-size: 22px !important;
+    line-height: 1.12 !important;
+  }
+
+  .chart-subtitle,
+  .mck-chart-subtitle {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/* small phones */
+@media (max-width: 480px) {
+  .chart-wrap,
+  .premium-chart-wrap,
+  .mck-chart-wrap {
+    height: 300px !important;
+    min-height: 300px !important;
+  }
+
+  .chart-title,
+  .premium-chart-title,
+  .mck-chart-title {
+    font-size: 20px !important;
+  }
+}
