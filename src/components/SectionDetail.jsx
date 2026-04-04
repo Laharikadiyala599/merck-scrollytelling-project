@@ -1,5 +1,7 @@
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import AppendixJourneyInfographic from "./AppendixJourneyInfographic";
 import {
   ResponsiveContainer,
   BarChart,
@@ -11,6 +13,7 @@ import {
   Line,
   PieChart,
   Pie,
+  Sector,
   AreaChart,
   Area,
   CartesianGrid,
@@ -18,6 +21,21 @@ import {
 } from "recharts";
 import { scenes } from "../data/scenes";
 import { iconRegistry } from "../data/themeConfig";
+/* =========================
+   HOOKS
+   ========================= */
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= breakpoint);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= breakpoint);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [breakpoint]);
+
+  return isMobile;
+}
 
 function useReplayOnView(threshold = 0.35) {
   const ref = useRef(null);
@@ -41,6 +59,10 @@ function useReplayOnView(threshold = 0.35) {
 
   return { ref, replayKey };
 }
+
+/* =========================
+   SMALL HELPERS
+   ========================= */
 
 function CountUp({ value, duration = 1200, prefix = "", suffix = "" }) {
   const [count, setCount] = useState(0);
@@ -94,6 +116,10 @@ function getToneClass(tone) {
 
   return toneMap[tone] || "theme-overview";
 }
+
+/* =========================
+   INFOGRAPHIC BLOCKS
+   ========================= */
 
 function KPIGrid({ items = [], onHoverStart, onHoverEnd }) {
   const { ref, replayKey } = useReplayOnView(0.35);
@@ -187,7 +213,11 @@ function PillarsBlock({ items = [], onHoverStart, onHoverEnd }) {
 }
 
 function MomentumBlock({ items = [], onHoverStart, onHoverEnd }) {
+  const maxLaunchValue = items.length
+    ? Math.max(...items.map((item) => item.value))
+    : 0;
   return (
+    
     <div className="launches-strip">
       {items.map((item, index) => (
         <motion.div
@@ -201,13 +231,15 @@ function MomentumBlock({ items = [], onHoverStart, onHoverEnd }) {
         >
           <div className="launch-label">{item.label}</div>
           <div className="launch-bar">
-            <motion.div
-              className="launch-bar-fill"
-              initial={{ width: 0 }}
-              animate={{ width: `${item.value * 2}%` }}
-              transition={{ delay: 0.18 + index * 0.06, duration: 0.45 }}
-            />
-          </div>
+  <div
+  className="launch-bar-fill"
+  style={{
+    width: maxLaunchValue
+      ? `${(item.value / maxLaunchValue) * 100}%`
+      : "0%"
+  }}
+/>
+</div>
           <div className="launch-value">{item.value}</div>
         </motion.div>
       ))}
@@ -297,6 +329,10 @@ function PanelsBlock({ items = [], onHoverStart, onHoverEnd }) {
     </div>
   );
 }
+
+/* =========================
+   INFOGRAPHIC RENDERER
+   ========================= */
 
 function InfographicRenderer({ scene, onHoverStart, onHoverEnd }) {
   const infographic = scene?.infographic;
@@ -434,6 +470,10 @@ function InfographicRenderer({ scene, onHoverStart, onHoverEnd }) {
   );
 }
 
+/* =========================
+   VISUAL / CHART BLOCKS
+   ========================= */
+
 function MilestoneBoard({ visual, onHoverStart, onHoverEnd }) {
   return (
     <div
@@ -486,7 +526,16 @@ function MilestoneBoard({ visual, onHoverStart, onHoverEnd }) {
 function ChartBlock({ visual, onHoverStart, onHoverEnd }) {
   const [visibleItems, setVisibleItems] = useState(0);
   const [hasEnteredView, setHasEnteredView] = useState(false);
+  const [activePieIndex, setActivePieIndex] = useState(0);
   const chartRef = useRef(null);
+  const isMobile = useIsMobile(768);
+const chartHeight = isMobile ? 240 : 360;
+const chartFont = isMobile ? 11 : 13;
+const pieOuterRadius = isMobile ? 82 : 118;
+const pieInnerRadius = isMobile ? 42 : 60;
+const chartMargin = isMobile
+  ? { top: 10, right: 6, left: -12, bottom: 0 }
+  : { top: 26, right: 10, left: 0, bottom: 0 };
 
   useEffect(() => {
     if (!chartRef.current || !visual?.data) return;
@@ -545,6 +594,79 @@ function ChartBlock({ visual, onHoverStart, onHoverEnd }) {
       </text>
     );
   };
+  const pieData = visibleChartData.filter((_, index) => index < visibleItems);
+const pieTotal = pieData.reduce((sum, item) => sum + item.value, 0);
+
+const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value }) => {
+  const RADIAN = Math.PI / 180;
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  const percent = pieTotal ? `${Math.round((value / pieTotal) * 100)}%` : "";
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="#fff"
+      textAnchor="middle"
+      dominantBaseline="central"
+      fontSize={isMobile ? 11 : 13}
+      fontWeight={700}
+    >
+      {percent}
+    </text>
+  );
+};
+
+const renderActiveShape = (props) => {
+  const {
+    cx,
+    cy,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    value
+  } = props;
+
+  const percent = pieTotal ? `${Math.round((value / pieTotal) * 100)}%` : "";
+
+  return (
+    <g>
+      <Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius + 10}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+      />
+      <text
+        x={cx}
+        y={cy - 8}
+        textAnchor="middle"
+        fill="#111827"
+        fontSize={isMobile ? 13 : 15}
+        fontWeight={700}
+      >
+        {payload.name}
+      </text>
+      <text
+        x={cx}
+        y={cy + 14}
+        textAnchor="middle"
+        fill="#64748b"
+        fontSize={isMobile ? 11 : 13}
+      >
+        {percent}
+      </text>
+    </g>
+  );
+};
 
   return (
     <div
@@ -571,11 +693,11 @@ function ChartBlock({ visual, onHoverStart, onHoverEnd }) {
       </div>
 
       <div className="chart-wrap premium-chart-wrap mck-chart-wrap">
-        <ResponsiveContainer width="100%" height={360}>
+        <ResponsiveContainer width="100%" height={chartHeight}>
           {visual.chartType === "bar" ? (
             <BarChart
               data={visibleChartData}
-              margin={{ top: 26, right: 10, left: 0, bottom: 0 }}
+              margin={chartMargin}
               barCategoryGap="22%"
             >
               <CartesianGrid
@@ -587,12 +709,12 @@ function ChartBlock({ visual, onHoverStart, onHoverEnd }) {
                 dataKey="name"
                 tickLine={false}
                 axisLine={false}
-                tick={{ fontSize: 13, fill: "#475569" }}
+                tick={{ fontSize: chartFont, fill: "#475569" }}
               />
               <YAxis
                 tickLine={false}
                 axisLine={false}
-                tick={{ fontSize: 13, fill: "#64748b" }}
+                tick={{ fontSize: chartFont, fill: "#64748b" }}
               />
               <Tooltip />
               <Bar
@@ -615,12 +737,12 @@ function ChartBlock({ visual, onHoverStart, onHoverEnd }) {
                 dataKey="name"
                 tickLine={false}
                 axisLine={false}
-                tick={{ fontSize: 13, fill: "#475569" }}
+                tick={{ fontSize: chartFont, fill: "#475569" }}
               />
               <YAxis
                 tickLine={false}
                 axisLine={false}
-                tick={{ fontSize: 13, fill: "#64748b" }}
+                tick={{ fontSize: chartFont, fill: "#64748b" }}
               />
               <Tooltip />
               <Line
@@ -634,28 +756,43 @@ function ChartBlock({ visual, onHoverStart, onHoverEnd }) {
               />
             </LineChart>
           ) : visual.chartType === "pie" ? (
-            <PieChart>
-              <Tooltip />
-              <Pie
-                data={visibleChartData.filter((_, index) => index < visibleItems)}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={118}
-                paddingAngle={2}
-                label
-                animationDuration={700}
-              >
-                {visibleChartData
-                  .filter((_, index) => index < visibleItems)
-                  .map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
-                  ))}
-              </Pie>
-            </PieChart>
-          ) : (
+  <PieChart>
+    <Tooltip
+      formatter={(value, name) => {
+        const percent = pieTotal ? `${Math.round((value / pieTotal) * 100)}%` : "";
+        return [`${value} (${percent})`, name];
+      }}
+    />
+    <Pie
+      data={pieData}
+      dataKey="value"
+      nameKey="name"
+      cx="50%"
+      cy="50%"
+      innerRadius={pieInnerRadius}
+      outerRadius={pieOuterRadius}
+      paddingAngle={2}
+      label={renderPieLabel}
+      labelLine={false}
+      activeIndex={activePieIndex}
+      activeShape={renderActiveShape}
+      onMouseEnter={(_, index) => setActivePieIndex(index)}
+      animationDuration={700}
+    >
+      {pieData.map((entry, index) => (
+        <Cell
+          key={`cell-${index}`}
+          fill={PIE_COLORS[index % PIE_COLORS.length]}
+          style={{
+            opacity: activePieIndex === index ? 1 : 0.88,
+            filter: activePieIndex === index ? "brightness(1.08)" : "none",
+            transition: "all 0.2s ease"
+          }}
+        />
+      ))}
+    </Pie>
+  </PieChart>
+) : (
             <AreaChart data={visibleChartData}>
               <defs>
                 <linearGradient id="templateAreaFill" x1="0" y1="0" x2="0" y2="1">
@@ -672,12 +809,12 @@ function ChartBlock({ visual, onHoverStart, onHoverEnd }) {
                 dataKey="name"
                 tickLine={false}
                 axisLine={false}
-                tick={{ fontSize: 13, fill: "#475569" }}
+                tick={{ fontSize: chartFont, fill: "#475569" }}
               />
               <YAxis
                 tickLine={false}
                 axisLine={false}
-                tick={{ fontSize: 13, fill: "#64748b" }}
+                tick={{ fontSize: chartFont, fill: "#64748b" }}
               />
               <Tooltip />
               <Area
@@ -718,35 +855,52 @@ function VisualRenderer({ visual, onHoverStart, onHoverEnd }) {
   );
 }
 
-function SceneCards({ cards = [], onHoverStart, onHoverEnd }) {
+/* =========================
+   CONTENT CARDS
+   ========================= */
+
+function SceneCards({ cards = [], layout = "two-top-one-wide", onHoverStart, onHoverEnd }) {
   if (!cards.length) return null;
 
   return (
-    <div className="apple-large-grid detail-card-grid">
-      {cards.map((card, index) => (
-        <motion.div
-          key={`${card.title}-${index}`}
-          className="apple-large-card detail-info-card"
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.18 + index * 0.08 }}
-          whileHover={{ y: -4 }}
-          onMouseEnter={() => onHoverStart(`${card.title}: ${card.text}`)}
-          onMouseLeave={onHoverEnd}
-        >
-          <div className="apple-large-content">
-            <span className="promo-tag">{card.tag}</span>
-            <h3>{card.title}</h3>
-            <p>{card.text}</p>
-          </div>
-        </motion.div>
-      ))}
+    <div className={`detail-card-layout ${layout}`}>
+      {cards.map((card, index) => {
+        const CardIcon = iconRegistry[card.icon];
+
+        return (
+          <motion.div
+            key={`${card.title}-${index}`}
+            className={`detail-layout-card card-index-${index + 1}`}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.18 + index * 0.08 }}
+            whileHover={{ y: -6 }}
+            onMouseEnter={() => onHoverStart(`${card.title}: ${card.text}`)}
+            onMouseLeave={onHoverEnd}
+          >
+            <div className="detail-layout-accent" />
+
+            <div className="detail-layout-card-inner">
+              <div className="card-icon-header">
+                <div className="card-icon-shell">
+                  {CardIcon ? <CardIcon size={28} /> : null}
+                </div>
+              </div>
+
+              <div className="detail-layout-content">
+                <span className="promo-tag detail-layout-tag">{card.tag}</span>
+                <h3>{card.title}</h3>
+                <p>{card.text}</p>
+              </div>
+            </div>
+          </motion.div>
+        );
+      })}
     </div>
   );
 }
-
 /* =========================
-   APPENDIX BLOCKS
+   APPENDIX STATIC BLOCKS
    ========================= */
 
 function AppendixStrengthAnalysis() {
@@ -1136,11 +1290,16 @@ function AppendixPositioningFlow() {
   );
 }
 
+/* =========================
+   APPENDIX HORIZONTAL DECK
+   ========================= */
+
+
 function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
   return (
     <motion.div
-  key={`${slide.kicker}-${pageEnterKey}`}
-  className={`appendix-deck-slide ${isActive ? "deck-slide-active" : "deck-slide-idle"}`}
+      key={`${slide.kicker}-${pageEnterKey}`}
+      className={`appendix-deck-slide ${isActive ? "deck-slide-active" : "deck-slide-idle"}`}
       initial={{ opacity: 0, x: 56, scale: 0.97 }}
       animate={{ opacity: 1, x: 0, scale: 1 }}
       exit={{ opacity: 0, x: -40, scale: 0.97 }}
@@ -1257,7 +1416,10 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
                 >
                   <div
                     className="risk-overlap-number"
-                    style={{ background: item.color, color: item.no === "03" ? "#1c2c68" : "#fff" }}
+                    style={{
+                      background: item.color,
+                      color: item.no === "03" ? "#1c2c68" : "#fff"
+                    }}
                   >
                     {item.no}
                   </div>
@@ -1322,10 +1484,7 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
                   <div className="brand-arrow-box left-arrow-box">
                     <p>{row.leftText}</p>
                   </div>
-                  <div
-                    className="brand-num-box"
-                    style={{ background: row.leftColor }}
-                  >
+                  <div className="brand-num-box" style={{ background: row.leftColor }}>
                     {row.leftNo}
                   </div>
                 </div>
@@ -1333,7 +1492,13 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
                 <div className="brand-side right-side">
                   <div
                     className="brand-num-box"
-                    style={{ background: row.rightColor, color: row.rightNo === "01" || row.rightNo === "02" ? "#111" : "#fff" }}
+                    style={{
+                      background: row.rightColor,
+                      color:
+                        row.rightNo === "01" || row.rightNo === "02"
+                          ? "#111"
+                          : "#fff"
+                    }}
                   >
                     {row.rightNo}
                   </div>
@@ -1440,7 +1605,7 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
 function AppendixHorizontalDeck() {
   const deckRef = useRef(null);
   const wheelLockRef = useRef(false);
-const wheelAccumRef = useRef(0);
+  const wheelAccumRef = useRef(0);
   const [pageEnterKey, setPageEnterKey] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -1627,7 +1792,7 @@ const wheelAccumRef = useRef(0);
     setActiveSlide(clampedIndex);
 
     rail.scrollTo({
-      left: targetSlide.offsetLeft,
+      left: targetSlide.offsetLeft - 4,
       behavior: "smooth"
     });
   };
@@ -1684,75 +1849,82 @@ const wheelAccumRef = useRef(0);
     };
   }, []);
 
-const handleWheel = (e) => {
-  const rail = deckRef.current;
-  if (!rail) return;
+  const handleWheel = (e) => {
+    const target = e.target instanceof HTMLElement ? e.target : null;
+    const slideScroller = target?.closest(".appendix-deck-slide");
+    const absX = Math.abs(e.deltaX);
+    const absY = Math.abs(e.deltaY);
 
-  const absX = Math.abs(e.deltaX);
-  const absY = Math.abs(e.deltaY);
+    if (slideScroller && absY > absX) {
+      return;
+    }
 
-  if (absX < 2 && absY < 2) return;
+    if (absX < 24 || absX <= absY) {
+      return;
+    }
 
-  e.preventDefault();
-  e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
 
-  if (wheelLockRef.current) return;
+    if (wheelLockRef.current) return;
 
-  const delta = absX > absY ? e.deltaX : e.deltaY;
-  wheelAccumRef.current += delta;
+    wheelAccumRef.current += e.deltaX;
 
-  if (Math.abs(wheelAccumRef.current) < 40) return;
+    if (Math.abs(wheelAccumRef.current) < 70) {
+      return;
+    }
 
-  wheelLockRef.current = true;
+    wheelLockRef.current = true;
+    const nextIndex = wheelAccumRef.current > 0 ? activeSlide + 1 : activeSlide - 1;
+    wheelAccumRef.current = 0;
 
-  if (wheelAccumRef.current > 0) {
-    scrollToSlide(activeSlide + 1);
-  } else {
-    scrollToSlide(activeSlide - 1);
-  }
+    scrollToSlide(nextIndex);
 
-  wheelAccumRef.current = 0;
+    window.setTimeout(() => {
+      wheelLockRef.current = false;
+    }, 380);
+  };
 
-  setTimeout(() => {
-    wheelLockRef.current = false;
-  }, 420);
-};
-
-  return (
-    <section className="appendix-block appendix-deck-shell">
-      <div className="appendix-deck-head">
-        <div>
-          <span className="appendix-kicker">REFERENCE SLIDE DECK</span>
-          <h3>Horizontal Appendix Slides</h3>
-          <p>Swipe on touchpad or use arrows to move through the remaining infographic slides.</p>
-        </div>
-
-        <div className="appendix-deck-controls">
-          <button className="appendix-arrow-btn" onClick={() => scrollDeck("left")}>
-            ←
-          </button>
-          <button className="appendix-arrow-btn" onClick={() => scrollDeck("right")}>
-            →
-          </button>
-        </div>
+return (
+  <section className="appendix-deck-shell">
+    <div className="appendix-deck-head">
+      <div>
+        <span className="appendix-kicker">REFERENCE SLIDE DECK</span>
+        <h3>Horizontal Appendix Slides</h3>
+        <p>Swipe on touchpad or use arrows to move through the remaining infographic slides.</p>
       </div>
 
-      <div ref={deckRef} className="appendix-side-scroll" onWheel={handleWheel}>
-        {slides.map((slide, index) => (
-          <div
-            className={`appendix-side-slide ${activeSlide === index ? "is-active" : "is-inactive"}`}
-            key={`${slide.kicker}-${pageEnterKey}-${index}`}
-          >
-            <AppendixDeckSlide
-              slide={slide}
-              pageEnterKey={`${pageEnterKey}-${activeSlide === index ? "active" : "idle"}-${index}`}
-              isActive={activeSlide === index}
-            />
-          </div>
-        ))}
+      <div className="appendix-deck-controls">
+        <button className="appendix-arrow-btn" onClick={() => scrollDeck("left")}>
+          ←
+        </button>
+        <button className="appendix-arrow-btn" onClick={() => scrollDeck("right")}>
+          →
+        </button>
       </div>
-    </section>
-  );
+    </div>
+
+    <div className="appendix-rail-viewport">
+      <div className="appendix-deck-track">
+        <div ref={deckRef} className="appendix-side-scroll" onWheel={handleWheel}>
+          {slides.map((slide, index) => (
+            <div
+              className={`appendix-side-slide ${activeSlide === index ? "is-active" : "is-inactive"}`}
+              key={`${slide.kicker}-${pageEnterKey}-${index}`}
+            >
+              <AppendixDeckSlide
+                slide={slide}
+                pageEnterKey={`${pageEnterKey}-${activeSlide === index ? "active" : "idle"}-${index}`}
+                isActive={activeSlide === index}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    <AppendixJourneyInfographic />
+  </section>
+);
 }
 function AppendixExperience() {
   return (
@@ -1762,10 +1934,13 @@ function AppendixExperience() {
       <AppendixRiskTools />
       <AppendixTimeline />
       <AppendixPositioningFlow />
-      <AppendixHorizontalDeck />
     </div>
   );
 }
+
+/* =========================
+   MAIN SECTION DETAIL PAGE
+   ========================= */
 
 export default function SectionDetail({
   activeScene,
@@ -1933,75 +2108,93 @@ export default function SectionDetail({
   };
 
   if (!activeScene) return null;
+    
 
-  if (activeScene.id === "appendix") {
-    return (
-      <div className="detail-page">
-        <motion.div
-          className="detail-shell seamless-shell swipe-shell appendix-shell"
-          data-page={activeScene.id}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          onWheel={handleWheel}
+   if (activeScene.id === "appendix") {
+  return (
+    <div className="detail-page">
+      <div className="top-nav-overlay">
+        <button
+          className="top-nav-btn left"
+          onClick={() =>
+            prevScene ? setActivePage(prevScene.id) : setActivePage("store")
+          }
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeScene.id}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -24 }}
-              transition={{ duration: 0.3 }}
-            >
-              <section className="detail-hero morph-hero">
-                <div className="detail-hero-left">
-                  <motion.span className="promo-tag detail-top-tag">
-                    {activeScene.hero?.tag || "REFERENCE"}
-                  </motion.span>
+          {prevScene ? `← ${prevScene.title}` : "← Home"}
+        </button>
 
-                  <motion.h1>{activeScene.hero?.heading}</motion.h1>
-
-                  <motion.p className="detail-morph-desc">
-                    {activeScene.hero?.description}
-                  </motion.p>
-                </div>
-
-                <div className="detail-hero-right">
-                  <p>Appendix Reference ↗</p>
-                  <p>Supporting Visuals ↗</p>
-                </div>
-              </section>
-
-              <AppendixExperience />
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="detail-nav-row">
-            <button
-              className="secondary-btn"
-              onClick={() => (prevScene ? setActivePage(prevScene.id) : setActivePage("store"))}
-            >
-              {prevScene ? `← ${prevScene.title}` : "← Home"}
-            </button>
-
-            <button className="primary-btn" onClick={() => setActivePage("store")}>
-              Back to Home
-            </button>
-
-            <button
-              className="secondary-btn"
-              onClick={() => nextScene && setActivePage(nextScene.id)}
-              disabled={!nextScene}
-            >
-              {nextScene ? `${nextScene.title} →` : "End"}
-            </button>
-          </div>
-        </motion.div>
+        {nextScene && (
+          <button
+            className="top-nav-btn right"
+            onClick={() => setActivePage(nextScene.id)}
+          >
+            {nextScene.title} →
+          </button>
+        )}
       </div>
-    );
-  }
+
+<>
+  <motion.div
+    className="detail-shell seamless-shell swipe-shell appendix-shell"
+    data-page={activeScene.id}
+    onTouchStart={handleTouchStart}
+    onTouchEnd={handleTouchEnd}
+    onWheel={handleWheel}
+  >
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={activeScene.id}
+        initial={{ opacity: 0, x: 24 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -24 }}
+        transition={{ duration: 0.3 }}
+      >
+        <section className="detail-hero morph-hero">
+          <div className="detail-hero-left">
+            <motion.span className="promo-tag detail-top-tag">
+              {activeScene.hero?.tag || "REFERENCE"}
+            </motion.span>
+
+            <motion.h1>{activeScene.hero?.heading}</motion.h1>
+
+            <motion.p className="detail-morph-desc">
+              {activeScene.hero?.description}
+            </motion.p>
+          </div>
+        </section>
+
+        <AppendixExperience />
+      </motion.div>
+    </AnimatePresence>
+  </motion.div>
+
+  <section className="appendix-deck-breakout">
+    <AppendixHorizontalDeck />
+  </section>
+</>
+    </div>
+  );
+}
 
   return (
     <div className="detail-page">
+      <div className="top-nav-overlay">
+  <button
+    className="top-nav-btn left"
+    onClick={() => (prevScene ? setActivePage(prevScene.id) : setActivePage("store"))}
+  >
+    {prevScene ? `← ${prevScene.title}` : "← Home"}
+  </button>
+
+  {nextScene && (
+    <button
+      className="top-nav-btn right"
+      onClick={() => setActivePage(nextScene.id)}
+    >
+      {nextScene.title} →
+    </button>
+  )}
+</div>
       <motion.div
         className="detail-shell seamless-shell swipe-shell"
         data-page={activeScene.id}
@@ -2030,37 +2223,9 @@ export default function SectionDetail({
                 </motion.p>
               </div>
 
-              <div className="detail-hero-right">
-                <p>Connect with a Specialist ↗</p>
-                <p>Explore the experience ↗</p>
-              </div>
+              
             </section>
 
-            {hoverText && (
-              <div className="hover-explainer">
-                <strong>Explanation:</strong> {hoverText}
-              </div>
-            )}
-
-            {activeScene.subnav?.length > 0 && (
-              <motion.div
-                className="subnav"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 }}
-              >
-                {activeScene.subnav.map((item, index) => (
-                  <span
-                    key={index}
-                    className="subnav-item"
-                    onMouseEnter={() => handleHoverStart(item)}
-                    onMouseLeave={handleHoverEnd}
-                  >
-                    {item}
-                  </span>
-                ))}
-              </motion.div>
-            )}
 
             <motion.h2
               className="section-title"
@@ -2096,27 +2261,16 @@ export default function SectionDetail({
               transition={{ delay: 0.18 }}
             >
               <SceneCards
-                cards={activeScene.cards}
-                onHoverStart={handleHoverStart}
-                onHoverEnd={handleHoverEnd}
-              />
+  cards={activeScene.cards}
+  layout={activeScene.cardLayout}
+  onHoverStart={handleHoverStart}
+  onHoverEnd={handleHoverEnd}
+/>
             </motion.div>
           </motion.div>
         </AnimatePresence>
 
-        <div className="detail-nav-row">
-          <button className="secondary-btn" onClick={goPrev}>
-            {prevScene ? `← ${prevScene.title}` : "← Home"}
-          </button>
-
-          <button className="primary-btn" onClick={() => setActivePage("store")}>
-            Back to Home
-          </button>
-
-          <button className="secondary-btn" onClick={goNext} disabled={!nextScene}>
-            {nextScene ? `${nextScene.title} →` : "End"}
-          </button>
-        </div>
+       
       </motion.div>
     </div>
   );

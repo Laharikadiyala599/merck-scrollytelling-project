@@ -3,14 +3,25 @@ export default function Navbar({
   siteConfig,
   hoveredNav,
   setHoveredNav,
-  setActivePage
+  setActivePage,
+  activePage,
+  onHomeClick,
+  onChatToggle
 }) {
   return (
     <div className="navbar apple-navbar">
       <div className="nav-left">
-        <div className="logo apple-logo" onClick={() => setActivePage("store")}>
-          {siteConfig.brandLetter}
-        </div>
+        <button
+  type="button"
+  className="logo apple-logo"
+  onClick={onHomeClick}
+>
+  <img
+    src="/logo.png"
+    alt={siteConfig.companyName || "Logo"}
+    className="logo-img"
+  />
+</button>
 
         <div className="nav-items apple-nav-items">
           {scenes.map((scene) => (
@@ -21,11 +32,13 @@ export default function Navbar({
               onMouseLeave={() => setHoveredNav(null)}
             >
               <span
-                className="nav-item apple-nav-item"
-                onClick={() => setActivePage(scene.id)}
-              >
-                {scene.title}
-              </span>
+  className={`nav-item apple-nav-item ${
+    activePage === scene.id ? "active-nav-item" : ""
+  }`}
+  onClick={() => setActivePage(scene.id)}
+>
+  {scene.title}
+</span>
 
               {hoveredNav === scene.id && (
                 <div className="nav-dropdown apple-nav-dropdown">
@@ -49,7 +62,14 @@ export default function Navbar({
         </div>
       </div>
 
-      <div className="nav-right apple-nav-right">⌕</div>
+      <div className="nav-right apple-nav-right">
+        <img
+          src="/right-logo.png"
+          alt="chat"
+          className="right-logo"
+          onClick={onChatToggle}
+        />
+      </div>
     </div>
   );
 }

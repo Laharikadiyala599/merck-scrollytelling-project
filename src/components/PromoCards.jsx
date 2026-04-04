@@ -52,38 +52,60 @@ export default function PromoCards({
       </div>
 
       <div className="apple-large-grid">
-        {rest.map((scene, index) => (
-          <motion.div
-            key={scene.id}
-            className="apple-large-card"
-            layoutId={`card-${scene.id}`}
-            onClick={() => setActivePage(scene.id)}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05, duration: 0.35 }}
-            whileHover={{ y: -6 }}
-          >
-            <div className="apple-large-image-wrap">
-              {scene.image ? (
-                <img
-                  src={scene.image}
-                  alt={scene.title}
-                  className="apple-large-image"
-                />
-              ) : (
-                <div className="apple-large-image placeholder-card">
-                  <span>{scene.title}</span>
-                </div>
-              )}
-            </div>
+        {rest.map((scene, index) => {
+          const isAppendix = scene.id === "appendix";
 
-            <div className="apple-large-content">
-              <span className="promo-tag">{scene.hero?.tag || "NEW"}</span>
-              <h3>{scene.hero?.heading}</h3>
-              <p>{scene.hero?.description}</p>
-            </div>
-          </motion.div>
-        ))}
+          return (
+            <motion.div
+              key={scene.id}
+              className={
+                isAppendix ? "apple-appendix-wide-card" : "apple-large-card"
+              }
+              layoutId={`card-${scene.id}`}
+              onClick={() => setActivePage(scene.id)}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05, duration: 0.35 }}
+              whileHover={{ y: -6 }}
+            >
+              <div
+                className={
+                  isAppendix
+                    ? "apple-appendix-image-wrap"
+                    : "apple-large-image-wrap"
+                }
+              >
+                {scene.image ? (
+                  <img
+                    src={scene.image}
+                    alt={scene.title}
+                    className={
+                      isAppendix
+                        ? "apple-appendix-image"
+                        : "apple-large-image"
+                    }
+                  />
+                ) : (
+                  <div className="apple-large-image placeholder-card">
+                    <span>{scene.title}</span>
+                  </div>
+                )}
+              </div>
+
+              <div
+                className={
+                  isAppendix
+                    ? "apple-appendix-content"
+                    : "apple-large-content"
+                }
+              >
+                <span className="promo-tag">{scene.hero?.tag || "NEW"}</span>
+                <h3>{scene.hero?.heading}</h3>
+                <p>{scene.hero?.description}</p>
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );

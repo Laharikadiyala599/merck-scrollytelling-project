@@ -8,6 +8,7 @@ import IconRow from "./components/IconRow";
 import PromoCards from "./components/PromoCards";
 import SectionDetail from "./components/SectionDetail";
 import "./styles.css";
+import ChatBox from "./ChatBox";
 
 function splitNarration(text = "") {
   return text
@@ -53,8 +54,13 @@ function hasScrollableAncestor(target) {
 
 export default function App() {
   const [activePage, setActivePage] = useState("store");
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [hoveredNav, setHoveredNav] = useState(null);
-  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
+
+const toggleVoice = () => {
+  setIsVoiceEnabled((prev) => !prev);
+};
   const [hoverSpeechText, setHoverSpeechText] = useState("");
   const iconScrollRef = useRef(null);
 
@@ -106,7 +112,7 @@ export default function App() {
   };
 
   const speakNextSentence = (sessionId) => {
-    if (!voiceEnabled) return;
+    if (!isVoiceEnabled) return;
     if (activePage === "store") return;
     if (isHoverSpeakingRef.current) return;
     if (sessionId !== narrationSessionRef.current) return;
@@ -141,7 +147,7 @@ export default function App() {
     currentSentenceIndexRef.current = 0;
     isHoverSpeakingRef.current = false;
 
-    if (!voiceEnabled) return;
+    if (!isVoiceEnabled) return;
     if (activePage === "store") return;
     if (!activeScene?.narration) return;
 
@@ -150,7 +156,7 @@ export default function App() {
   };
 
   const resumeNarration = () => {
-    if (!voiceEnabled) return;
+    if (!isVoiceEnabled) return;
     if (activePage === "store") return;
     if (!activeScene?.narration) return;
     if (isHoverSpeakingRef.current) return;
@@ -171,10 +177,10 @@ export default function App() {
       window.speechSynthesis.cancel();
       if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     };
-  }, [activePage, activeScene, voiceEnabled]);
+  }, [activePage, activeScene, isVoiceEnabled]);
 
   useEffect(() => {
-    if (!voiceEnabled) return;
+    if (!isVoiceEnabled) return;
 
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
@@ -210,7 +216,7 @@ export default function App() {
     return () => {
       if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
     };
-  }, [hoverSpeechText, voiceEnabled]);
+  }, [hoverSpeechText, isVoiceEnabled]);
 
   useEffect(() => {
     const unlockWheel = () => {
@@ -218,88 +224,99 @@ export default function App() {
       gestureAccumulatorRef.current = 0;
     };
 
-    const handleWheel = (event) => {
-      if (activePage !== "store") return;
-      if (isInteractiveElement(event.target)) return;
+   const handleWheel = (event) => {
+  if (activePage !== "store") return;
+  if (isInteractiveElement(event.target)) return;
 
-      const target = event.target;
-      const inHorizontalSection =
-        target instanceof HTMLElement &&
-        target.closest(".appendix-side-scroll, .appendix-flow-row, .apple-icon-row");
+  const target = event.target;
+  const absX = Math.abs(event.deltaX);
+  const absY = Math.abs(event.deltaY);
 
-      if (inHorizontalSection) return;
+  const inHorizontalSection =
+    target instanceof HTMLElement &&
+    target.closest(".appendix-side-scroll, .appendix-flow-row, .apple-icon-row");
 
-      const insideScrollableArea = hasScrollableAncestor(target);
-      const absX = Math.abs(event.deltaX);
-      const absY = Math.abs(event.deltaY);
+  if (inHorizontalSection) return;
 
-      const looksLikeTrackpadSwipe =
-        absX > 8 || (absY > 8 && event.ctrlKey === false);
+  const insideScrollableArea = hasScrollableAncestor(target);
+  if (insideScrollableArea) return;
 
-      if (!looksLikeTrackpadSwipe) return;
+  // ✅ only allow intentional horizontal swipe navigation
+  const isIntentionalHorizontalSwipe = absX > 45 && absX > absY * 1.4;
 
-      if (insideScrollableArea) {
-        const inIconRow =
-          target instanceof HTMLElement &&
-          target.closest(".apple-icon-row, .apple-icon-toolbar");
+  if (!isIntentionalHorizontalSwipe) return;
+  if (wheelLockRef.current) return;
 
-        if (!inIconRow) return;
-      }
+  gestureAccumulatorRef.current += event.deltaX;
 
-      if (wheelLockRef.current) return;
+  const THRESHOLD = 120;
+  if (Math.abs(gestureAccumulatorRef.current) < THRESHOLD) return;
 
-      const isMostlyHorizontal = absX > absY * 1.1;
-      const movement = isMostlyHorizontal ? event.deltaX : event.deltaY;
+  wheelLockRef.current = true;
 
-      gestureAccumulatorRef.current += movement;
+  if (gestureAccumulatorRef.current > 0) {
+    navigateRelative("next");
+  } else {
+    navigateRelative("prev");
+  }
 
-      const THRESHOLD = 110;
-      if (Math.abs(gestureAccumulatorRef.current) < THRESHOLD) return;
+  gestureAccumulatorRef.current = 0;
 
-      wheelLockRef.current = true;
-
-      if (gestureAccumulatorRef.current > 0) {
-        navigateRelative("next");
-      } else {
-        navigateRelative("prev");
-      }
-
-      gestureAccumulatorRef.current = 0;
-
-      if (wheelCooldownRef.current) clearTimeout(wheelCooldownRef.current);
-      wheelCooldownRef.current = setTimeout(unlockWheel, 650);
-    };
-
-    window.addEventListener("wheel", handleWheel, { passive: true });
+  if (wheelCooldownRef.current) clearTimeout(wheelCooldownRef.current);
+  wheelCooldownRef.current = setTimeout(() => {
+    wheelLockRef.current = false;
+    gestureAccumulatorRef.current = 0;
+  }, 650);
+};
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
       if (wheelCooldownRef.current) clearTimeout(wheelCooldownRef.current);
     };
   }, [activePage, pageOrder]);
+  useEffect(() => {
+  window.scrollTo(0, 0);
+}, [activePage]);
+const goHomeAndScrollTop = () => {
+  setActivePage("store");
+
+  requestAnimationFrame(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+};
 
   return (
     <LayoutGroup>
       <div className="app swipe-shell">
-        <Navbar
-          scenes={scenes}
-          siteConfig={siteConfig}
-          hoveredNav={hoveredNav}
-          setHoveredNav={setHoveredNav}
-          setActivePage={setActivePage}
-        />
+<Navbar
+  scenes={scenes}
+  siteConfig={siteConfig}
+  hoveredNav={hoveredNav}
+  setHoveredNav={setHoveredNav}
+  setActivePage={setActivePage}
+  activePage={activePage}
+  onHomeClick={goHomeAndScrollTop}
+  onChatToggle={() => setIsChatOpen((prev) => !prev)}
+  isVoiceEnabled={isVoiceEnabled}
+  toggleVoice={toggleVoice}
+/>
+<ChatBox
+  isOpen={isChatOpen}
+  onClose={() => setIsChatOpen(false)}
+/>
 
         <div className="voice-toggle-wrap">
-          <button
-            className="voice-toggle-btn"
-            onClick={() => {
-              window.speechSynthesis.cancel();
-              setVoiceEnabled((prev) => !prev);
-            }}
-          >
-            {voiceEnabled ? "Voice On" : "Voice Off"}
-          </button>
-        </div>
+  <button className="voice-toggle-btn" onClick={toggleVoice}>
+    <img
+      src={isVoiceEnabled ? "/voice-on.png" : "/voice-off.png"}
+      alt="voice toggle"
+      className="voice-icon"
+    />
+  </button>
+</div>
 
         <AnimatePresence mode="wait">
           {activePage === "store" ? (

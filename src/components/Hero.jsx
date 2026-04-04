@@ -1,20 +1,22 @@
+import { motion } from "framer-motion";
+
 export default function Hero({ siteConfig }) {
   return (
-    <section className="hero apple-hero-premium">
-      <div className="apple-hero-left">
-        <div className="apple-hero-kicker">{siteConfig.companyName}</div>
-        <h1>{siteConfig.heroTitle}</h1>
-      </div>
+    <section className="apple-hero-compact">
+      <motion.div
+        className="apple-hero-compact-inner"
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.65, ease: "easeOut" }}
+      >
+        <h1 className="apple-hero-compact-title">
+          Mer<span>ck</span>
+        </h1>
 
-      <div className="apple-hero-right">
-        <h2>{siteConfig.heroSubtitle}</h2>
-
-        <div className="hero-links apple-hero-links">
-          {siteConfig.heroLinks.map((link, index) => (
-            <p key={index}>{link}</p>
-          ))}
-        </div>
-      </div>
+        <p className="apple-hero-compact-text">
+          {siteConfig.heroDescription}
+        </p>
+      </motion.div>
     </section>
   );
 }

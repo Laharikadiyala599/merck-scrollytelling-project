@@ -1,8 +1,9 @@
 export const scenes = [
   {
-    id: "overview",
-    title: "Overview",
-    pageTitle: "Overview",
+    id: "Summary",
+    title: "Summary",
+    cardLayout: "two-top-one-wide",
+    pageTitle: "Summary",
     theme: {
       icon: "layoutDashboard",
       tone: "blue"
@@ -10,7 +11,7 @@ export const scenes = [
     narration:
       "Merck is transforming its portfolio through an expansive pipeline, new launch momentum, science driven business development, and a significant commercial opportunity that now exceeds seventy billion dollars by the mid twenty thirties.",
     hero: {
-      tag: "NEW",
+      tag: "Summary",
       heading: "Transforming the portfolio with the next wave of innovation",
       description:
         "A high-level view of the four strategic pillars driving Merck’s next phase of growth."
@@ -51,27 +52,31 @@ export const scenes = [
       ]
     },
     cards: [
-      {
-        tag: "PIPELINE",
-        title: "Advancing diverse & expansive pipeline",
-        text: "Around eighty Phase 3 studies are ongoing across multiple therapeutic areas."
-      },
-      {
-        tag: "LAUNCHES",
-        title: "Launching new growth drivers",
-        text: "Merck expects more than twenty launches, with almost all carrying blockbuster potential."
-      },
-      {
-        tag: "BUSINESS DEVELOPMENT",
-        title: "Executing science-driven business development",
-        text: "The company is actively pursuing additional value-creating transactions."
-      }
-    ]
+  {
+    tag: "PIPELINE",
+    title: "Advancing diverse & expansive pipeline",
+    text: "Around eighty Phase 3 studies are ongoing across multiple therapeutic areas.",
+    icon: "activity"
+  },
+  {
+    tag: "LAUNCHES",
+    title: "Launching new growth drivers",
+    text: "Merck expects more than twenty launches, with almost all carrying blockbuster potential.",
+    icon: "rocket"
+  },
+  {
+    tag: "BUSINESS DEVELOPMENT",
+    title: "Executing science-driven business development",
+    text: "The company is actively pursuing additional value-creating transactions.",
+    icon: "briefcase"
+  }
+]
   },
 
   {
     id: "portfolio",
     title: "Portfolio",
+    cardLayout: "three-vertical",
     pageTitle: "Portfolio",
     theme: {
       icon: "briefcase",
@@ -80,7 +85,7 @@ export const scenes = [
     narration:
       "Ten key programs represent the majority of Merck’s long term commercial opportunity and illustrate how the portfolio is being reshaped across oncology, cardiometabolic and respiratory, infectious disease, immunology, and ophthalmology.",
     hero: {
-      tag: "INSIGHT",
+      tag: "portfolio",
       heading: "Ten key programs represent the majority of long-term opportunity",
       description:
         "The portfolio is increasingly concentrated around high-impact programs across five major therapeutic areas."
@@ -122,27 +127,31 @@ export const scenes = [
       ]
     },
     cards: [
-      {
-        tag: "KEY PROGRAMS",
-        title: "Top assets drive the mix",
-        text: "Leading programs include WINREVAIR, Ohtuvayre, MK-1406, ifinatamab deruxtecan, sacituzumab tirumotecan, and tulisokibart."
-      },
-      {
-        tag: "THERAPEUTIC AREAS",
-        title: "Five major opportunity areas",
-        text: "The portfolio spans oncology, cardiometabolic and respiratory, infectious disease, immunology, and ophthalmology."
-      },
-      {
-        tag: "FOCUS",
-        title: "Concentrated long-term value creation",
-        text: "A relatively small number of programs accounts for most of the >$70B mid-2030s opportunity."
-      }
-    ]
+  {
+    tag: "KEY PROGRAMS",
+    title: "Top assets drive the mix",
+    text: "Leading programs include WINREVAIR, Ohtuvayre, MK-1406, and others.",
+    icon: "briefcase"
+  },
+  {
+    tag: "THERAPEUTIC AREAS",
+    title: "Five major opportunity areas",
+    text: "Portfolio spans oncology, cardio, infectious disease and more.",
+    icon: "activity"
+  },
+  {
+    tag: "FOCUS",
+    title: "Concentrated long-term value creation",
+    text: "Few programs drive most of the >$70B opportunity.",
+    icon: "trendingUp"
+  }
+]
   },
 
   {
     id: "pipeline",
     title: "Pipeline",
+    cardLayout: "left-tall-right-stack",
     pageTitle: "Pipeline",
     theme: {
       icon: "activity",
@@ -151,7 +160,7 @@ export const scenes = [
     narration:
       "Merck is entering a data rich period with multiple Phase 3 readouts across novel mechanisms in 2026 and 2027, including programs in HIV, ophthalmology, immunology, oncology, and infectious disease.",
     hero: {
-      tag: "FOCUS",
+      tag: "pipeline",
       heading: "Data-rich period ahead with multiple Phase 3 readouts",
       description:
         "Key readouts are expected across 2026 and 2027 in several novel mechanisms and disease areas."
@@ -194,27 +203,31 @@ export const scenes = [
       ]
     },
     cards: [
-      {
-        tag: "2026",
-        title: "Near-term Phase 3 catalysts",
-        text: "Key 2026 programs include ISL / LEN, MK-3000, and tulisokibart."
-      },
-      {
-        tag: "2027",
-        title: "Broader 2027 expansion",
-        text: "Additional oncology and infectious disease programs broaden the catalyst set in 2027."
-      },
-      {
-        tag: "MECHANISMS",
-        title: "Novel science across categories",
-        text: "The readout calendar spans HIV, ophthalmology, immunology, oncology, and influenza."
-      }
-    ]
+  {
+    tag: "2026",
+    title: "Near-term Phase 3 catalysts",
+    text: "Key programs include ISL / LEN and MK-3000.",
+    icon: "activity"
+  },
+  {
+    tag: "2027",
+    title: "Broader expansion",
+    text: "Oncology and infectious disease programs expand pipeline.",
+    icon: "rocket"
+  },
+  {
+    tag: "MECHANISMS",
+    title: "Novel science across categories",
+    text: "Covers HIV, oncology, immunology and more.",
+    icon: "flask"
+  }
+]
   },
 
   {
     id: "launches",
     title: "Launches",
+    cardLayout: "one-wide-two-bottom",
     pageTitle: "Launches",
     theme: {
       icon: "rocket",
@@ -223,7 +236,7 @@ export const scenes = [
     narration:
       "New product launches are contributing at an accelerating pace, with launch product revenue rising from seventy million dollars in the second quarter of twenty twenty four to eight hundred twenty four million dollars in the third quarter of twenty twenty five.",
     hero: {
-      tag: "NEW",
+      tag: "launches",
       heading: "Accelerating contributions from new product launches",
       description:
         "Launch revenue is scaling rapidly as key new products gain traction."
@@ -267,27 +280,31 @@ export const scenes = [
       ]
     },
     cards: [
-      {
-        tag: "KEY PRODUCTS",
-        title: "Launch portfolio",
-        text: "Key products highlighted include WINREVAIR, Ohtuvayre, CAPVAXIVE, ENFLONSIA, and KEYTRUDA Qlex."
-      },
-      {
-        tag: "MOMENTUM",
-        title: "Steep revenue ramp",
-        text: "Quarterly launch revenue more than tenfolded from Q2 2024 to Q3 2025."
-      },
-      {
-        tag: "COMMERCIAL",
-        title: "Scaling commercial contribution",
-        text: "New launches are becoming a more material part of Merck’s growth algorithm."
-      }
-    ]
+  {
+    tag: "KEY PRODUCTS",
+    title: "Launch portfolio",
+    text: "WINREVAIR, Ohtuvayre and other products drive growth.",
+    icon: "rocket"
+  },
+  {
+    tag: "MOMENTUM",
+    title: "Steep revenue ramp",
+    text: "Revenue increased significantly across quarters.",
+    icon: "trendingUp"
+  },
+  {
+    tag: "COMMERCIAL",
+    title: "Scaling contribution",
+    text: "New launches becoming major revenue drivers.",
+    icon: "barChart"
+  }
+]
   },
 
   {
     id: "opportunity",
     title: "Opportunity",
+    cardLayout: "three-horizontal",
     pageTitle: "Opportunity",
     theme: {
       icon: "trendingUp",
@@ -296,7 +313,7 @@ export const scenes = [
     narration:
       "Merck’s mid 2030s revenue opportunity from potential new growth drivers now exceeds seventy billion dollars, more than double consensus 2028 total KEYTRUDA sales and up by more than twenty billion dollars since last year.",
     hero: {
-      tag: "GROWTH",
+      tag: "opportunity",
       heading: "Commercial opportunity from new growth drivers continues to expand",
       description:
         "The long-term opportunity has increased meaningfully and now stands at more than double consensus 2028 KEYTRUDA sales."
@@ -335,22 +352,25 @@ export const scenes = [
       ]
     },
     cards: [
-      {
-        tag: "SCALE",
-        title: "More than double",
-        text: "The new growth driver opportunity is more than 2X consensus 2028 total KEYTRUDA sales."
-      },
-      {
-        tag: "EXPANSION",
-        title: "Meaningful step-up vs. last year",
-        text: "Merck highlights a >$20B increase in opportunity since the prior year."
-      },
-      {
-        tag: "LONG TERM",
-        title: "Mid-2030s value creation",
-        text: "The company is increasingly orienting the portfolio around this next wave of revenue."
-      }
-    ]
+  {
+    tag: "SCALE",
+    title: "More than double",
+    text: "Opportunity is more than 2X KEYTRUDA baseline.",
+    icon: "trendingUp"
+  },
+  {
+    tag: "EXPANSION",
+    title: "Step-up vs last year",
+    text: "Opportunity increased by more than $20B.",
+    icon: "rocket"
+  },
+  {
+    tag: "LONG TERM",
+    title: "Mid-2030s value",
+    text: "Future revenue driven by pipeline + launches.",
+    icon: "activity"
+  }
+]
   },
 
   {
@@ -364,7 +384,7 @@ export const scenes = [
     narration:
       "Merck’s research story is centered on advancing leading edge science, entering a data rich period through twenty twenty seven, and converting innovation into long term value creation.",
     hero: {
-      tag: "SCIENCE",
+      tag: "research",
       heading: "Delivering pipeline advancement and portfolio transformation",
       description:
         "Research, development, and execution are being tied directly to long-term patient impact and shareholder value."
@@ -404,22 +424,25 @@ export const scenes = [
       ]
     },
     cards: [
-      {
-        tag: "PURPOSE",
-        title: "Leading-edge science",
-        text: "Research is framed around saving and improving lives while creating long-term value."
-      },
-      {
-        tag: "READOUTS",
-        title: "Entering a data-rich period",
-        text: "Multiple impactful Phase 3 readouts are expected through 2027."
-      },
-      {
-        tag: "EXECUTION",
-        title: "Strategic priorities in motion",
-        text: "Acceleration and augmentation of the pipeline have yielded more than twenty potential growth drivers."
-      }
-    ]
+  {
+    tag: "PURPOSE",
+    title: "Leading-edge science",
+    text: "Research focuses on innovation and patient outcomes.",
+    icon: "flask"
+  },
+  {
+    tag: "READOUTS",
+    title: "Data-rich period",
+    text: "Multiple Phase 3 readouts through 2027.",
+    icon: "activity"
+  },
+  {
+    tag: "EXECUTION",
+    title: "Strategic priorities",
+    text: "Pipeline acceleration and business development.",
+    icon: "trendingUp"
+  }
+]
   },
 
   {
@@ -433,7 +456,7 @@ export const scenes = [
     narration:
       "Merck achieved notable clinical and regulatory milestones in twenty twenty five across oncology, cardiometabolic, infectious disease, and animal health, while also delivering additional positive data readouts.",
     hero: {
-      tag: "IMPACT",
+      tag: "healthcare",
       heading: "Achieved notable clinical and regulatory milestones",
       description:
         "Merck’s recent healthcare impact spans approvals, positive data readouts, and additional trial initiations."
@@ -473,22 +496,25 @@ export const scenes = [
       ]
     },
     cards: [
-      {
-        tag: "APPROVALS",
-        title: "Significant approvals",
-        text: "The presentation highlights advances in KEYTRUDA, WINREVAIR, ENFLONSIA, BRAVECTO QUANTUM, and NUMELVI."
-      },
-      {
-        tag: "READOUTS",
-        title: "Key positive data readouts",
-        text: "Positive data updates span oncology, cardiometabolic, and infectious disease programs."
-      },
-      {
-        tag: "INITIATIONS",
-        title: "More studies moving forward",
-        text: "Trial starts expand the future pipeline across oncology, infectious disease, immunology, and ophthalmology."
-      }
-    ]
+  {
+    tag: "APPROVALS",
+    title: "Significant approvals",
+    text: "Advances in oncology and infectious disease.",
+    icon: "stethoscope"
+  },
+  {
+    tag: "READOUTS",
+    title: "Positive data",
+    text: "Strong results across therapeutic areas.",
+    icon: "activity"
+  },
+  {
+    tag: "INITIATIONS",
+    title: "New trials",
+    text: "Expanding future pipeline programs.",
+    icon: "rocket"
+  }
+]
   },
 
   {
@@ -502,7 +528,7 @@ export const scenes = [
     narration:
       "Merck’s commercial opportunity is becoming increasingly clinically derisked, with revenue potential building from today through twenty twenty six, twenty twenty seven, and twenty twenty eight plus.",
     hero: {
-      tag: "DATA",
+      tag: "analytics",
       heading: "Increasingly clinically derisked opportunity",
       description:
         "The long-term revenue stack is becoming more visible as programs advance through development milestones."
@@ -544,22 +570,25 @@ export const scenes = [
       ]
     },
     cards: [
-      {
-        tag: "DERISKING",
-        title: "Stepwise opportunity building",
-        text: "The slide sequence shows how today’s base expands through 2026, 2027, and later years."
-      },
-      {
-        tag: "PROGRAMS",
-        title: "Named programs support the stack",
-        text: "Assets such as WINREVAIR, Ohtuvayre, ENFLONSIA, MK-3000, MK-1406, and others contribute to visibility."
-      },
-      {
-        tag: "SIGNAL",
-        title: "Visibility improves over time",
-        text: "The presentation frames the revenue profile as increasingly clinically derisked."
-      }
-    ]
+  {
+    tag: "DERISKING",
+    title: "Stepwise growth",
+    text: "Opportunity builds over time.",
+    icon: "barChart"
+  },
+  {
+    tag: "PROGRAMS",
+    title: "Key contributors",
+    text: "Multiple programs support growth.",
+    icon: "activity"
+  },
+  {
+    tag: "SIGNAL",
+    title: "Visibility improves",
+    text: "Revenue clarity increases over time.",
+    icon: "trendingUp"
+  }
+]
   },
 
   {
@@ -600,22 +629,25 @@ export const scenes = [
       ]
     },
     cards: [
-      {
-        tag: "2025",
-        title: "Select transactions",
-        text: "The deck highlights Ohtuvayre, MK-1406, and MK-7262 as examples of 2025 portfolio augmentation."
-      },
-      {
-        tag: "PARTNERS",
-        title: "Large collaboration set",
-        text: "The presentation shows a broad network of partners supporting science-driven deal activity."
-      },
-      {
-        tag: "TRACK RECORD",
-        title: "Capital deployed at scale",
-        text: "Merck highlights a track record of more than $60B invested since 2021."
-      }
-    ]
+  {
+    tag: "2025",
+    title: "Transactions",
+    text: "Key deals expand portfolio strength.",
+    icon: "globe"
+  },
+  {
+    tag: "PARTNERS",
+    title: "Collaborations",
+    text: "Global partnerships drive innovation.",
+    icon: "activity"
+  },
+  {
+    tag: "TRACK RECORD",
+    title: "Capital deployed",
+    text: ">$60B invested since 2021.",
+    icon: "trendingUp"
+  }
+]
   },
 {
   id: "appendix",
@@ -631,7 +663,7 @@ export const scenes = [
     "This appendix includes animated supporting infographics and reference slides.",
 
   hero: {
-    tag: "REFERENCE",
+    tag: "Appendix",
     heading: "Appendix",
     description:
       "Animated supporting infographics and reference visuals for deeper discussion."
