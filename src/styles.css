@@ -6271,3 +6271,70 @@ body {
     font-size: 28px;
   }
 }
+/* =========================================
+   FINAL APPENDIX SCROLL FIX OVERRIDES
+   KEEP THIS AT VERY END OF styles.css
+   ========================================= */
+
+.appendix-rail-viewport {
+  overflow: visible !important;
+}
+
+.appendix-deck-track {
+  overflow: visible !important;
+}
+
+.appendix-side-scroll {
+  display: flex !important;
+  gap: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  overscroll-behavior-x: contain !important;
+  overscroll-behavior-y: auto !important;
+  scroll-snap-type: x mandatory !important;
+  scroll-behavior: smooth !important;
+  align-items: stretch !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.appendix-side-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.appendix-side-scroll::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 999px;
+}
+
+.appendix-side-slide {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  scroll-snap-align: start !important;
+  overflow: visible !important;
+  height: auto !important;
+}
+
+.appendix-deck-slide {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.performance-driver-stage,
+.risk-overlap-stage,
+.brand-compare-stage,
+.deck-foundation-layout,
+.deck-dimensions-layout {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.appendix-journey-section {
+  position: relative;
+  z-index: 1;
+}

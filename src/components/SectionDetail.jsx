@@ -1850,40 +1850,47 @@ function AppendixHorizontalDeck() {
   }, []);
 
   const handleWheel = (e) => {
-    const target = e.target instanceof HTMLElement ? e.target : null;
-    const slideScroller = target?.closest(".appendix-deck-slide");
-    const absX = Math.abs(e.deltaX);
-    const absY = Math.abs(e.deltaY);
+  const absX = Math.abs(e.deltaX);
+  const absY = Math.abs(e.deltaY);
 
-    if (slideScroller && absY > absX) {
-      return;
-    }
+  const isVerticalIntent = absY > absX * 1.05;
+  const isHorizontalIntent = absX > absY * 1.05 && absX > 18;
 
-    if (absX < 24 || absX <= absY) {
-      return;
-    }
+  // Let normal page up/down scrolling happen
+  if (isVerticalIntent) {
+    return;
+  }
 
+  // Ignore weak / unclear gestures
+  if (!isHorizontalIntent) {
+    return;
+  }
+
+  if (wheelLockRef.current) {
     e.preventDefault();
-    e.stopPropagation();
+    return;
+  }
 
-    if (wheelLockRef.current) return;
+  e.preventDefault();
 
-    wheelAccumRef.current += e.deltaX;
+  wheelAccumRef.current += e.deltaX;
 
-    if (Math.abs(wheelAccumRef.current) < 70) {
-      return;
-    }
+  if (Math.abs(wheelAccumRef.current) < 85) {
+    return;
+  }
 
-    wheelLockRef.current = true;
-    const nextIndex = wheelAccumRef.current > 0 ? activeSlide + 1 : activeSlide - 1;
-    wheelAccumRef.current = 0;
+  wheelLockRef.current = true;
 
-    scrollToSlide(nextIndex);
+  const nextIndex =
+    wheelAccumRef.current > 0 ? activeSlide + 1 : activeSlide - 1;
 
-    window.setTimeout(() => {
-      wheelLockRef.current = false;
-    }, 380);
-  };
+  wheelAccumRef.current = 0;
+  scrollToSlide(nextIndex);
+
+  window.setTimeout(() => {
+    wheelLockRef.current = false;
+  }, 320);
+};
 
 return (
   <section className="appendix-deck-shell">
@@ -1906,7 +1913,11 @@ return (
 
     <div className="appendix-rail-viewport">
       <div className="appendix-deck-track">
-        <div ref={deckRef} className="appendix-side-scroll" onWheel={handleWheel}>
+        <div
+  ref={deckRef}
+  className="appendix-side-scroll"
+  onWheel={handleWheel}
+>
           {slides.map((slide, index) => (
             <div
               className={`appendix-side-slide ${activeSlide === index ? "is-active" : "is-inactive"}`}
