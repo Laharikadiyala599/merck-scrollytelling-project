@@ -1,4 +1,4 @@
-
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AppendixJourneyInfographic from "./AppendixJourneyInfographic";
@@ -1300,10 +1300,10 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
     <motion.div
       key={`${slide.kicker}-${pageEnterKey}`}
       className={`appendix-deck-slide ${isActive ? "deck-slide-active" : "deck-slide-idle"}`}
-      initial={{ opacity: 0, x: 56, scale: 0.97 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, x: -40, scale: 0.97 }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      initial={{ opacity: 0, y: 40, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.2 }}
+      transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="appendix-block-head">
         <span className="appendix-kicker">{slide.kicker}</span>
@@ -1314,18 +1314,8 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
       {slide.type === "risk-overlap" && (
         <div className="performance-driver-stage">
           <div className="performance-driver-arrows">
-            <motion.div
-              className="performance-arrow left"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.45 }}
-            />
-            <motion.div
-              className="performance-arrow right"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.45 }}
-            />
+            <div className="performance-arrow left" />
+            <div className="performance-arrow right" />
           </div>
 
           <div className="performance-driver-row">
@@ -1333,38 +1323,33 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
               <motion.div
                 key={`${item.title}-${pageEnterKey}`}
                 className="performance-driver-col"
-                initial={{ opacity: 0, y: 32, scale: 0.94 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: 0.12 + index * 0.1, duration: 0.45 }}
+                initial={{ opacity: 0, y: 28, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.25 }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.08,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                whileHover={{ y: -6 }}
               >
-                <motion.div
+                <div
                   className="performance-driver-number"
                   style={{ background: item.color }}
-                  initial={{ opacity: 0, scale: 0.75 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.18 + index * 0.1, duration: 0.3 }}
                 >
                   {item.no}
-                </motion.div>
+                </div>
 
                 <div className="performance-driver-line top" />
 
-                <motion.div
+                <div
                   className="performance-driver-pill"
                   style={{ background: item.color }}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + index * 0.1, duration: 0.35 }}
                 >
                   {item.title}
-                </motion.div>
+                </div>
 
-                <motion.div
-                  className="performance-driver-node-wrap"
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.26 + index * 0.1, duration: 0.35 }}
-                >
+                <div className="performance-driver-node-wrap">
                   <div
                     className="performance-driver-node-ring"
                     style={{ borderColor: item.color }}
@@ -1379,18 +1364,13 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
                     className="performance-driver-side-tab right"
                     style={{ background: item.color }}
                   />
-                </motion.div>
+                </div>
 
                 <div className="performance-driver-line bottom" />
 
-                <motion.div
-                  className="performance-driver-card"
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.32 + index * 0.1, duration: 0.4 }}
-                >
+                <div className="performance-driver-card">
                   {item.text}
-                </motion.div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -1410,9 +1390,15 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
                 <motion.div
                   key={`${item.title}-${pageEnterKey}`}
                   className="risk-overlap-factor"
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.12 + index * 0.08, duration: 0.4 }}
+                  initial={{ opacity: 0, y: 26, scale: 0.96 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: false, amount: 0.25 }}
+                  transition={{
+                    duration: 0.45,
+                    delay: index * 0.08,
+                    ease: [0.22, 1, 0.36, 1]
+                  }}
+                  whileHover={{ y: -6 }}
                 >
                   <div
                     className="risk-overlap-number"
@@ -1437,24 +1423,27 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
               ))}
             </div>
 
-            <div className="risk-overlap-target-wrap">
+            <motion.div
+              className="risk-overlap-target-wrap"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: false, amount: 0.25 }}
+              transition={{ duration: 0.55, delay: 0.15 }}
+            >
               <div className="risk-overlap-ring ring-1" />
               <div className="risk-overlap-ring ring-2" />
               <div className="risk-overlap-ring ring-3" />
               <div className="risk-overlap-ring ring-4" />
 
               {slide.items.map((item, index) => (
-                <motion.div
+                <div
                   key={`connector-${item.no}-${pageEnterKey}`}
                   className={`risk-overlap-connector connector-${index + 1}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.35 + index * 0.08, duration: 0.3 }}
                 >
                   <span className="risk-overlap-dot" />
-                </motion.div>
+                </div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       )}
@@ -1477,8 +1466,14 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
                 key={`${row.leftNo}-${pageEnterKey}`}
                 className="brand-compare-row"
                 initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.12 + index * 0.08, duration: 0.38 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.22 }}
+                transition={{
+                  duration: 0.42,
+                  delay: index * 0.08,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                whileHover={{ y: -4 }}
               >
                 <div className="brand-side left-side">
                   <div className="brand-arrow-box left-arrow-box">
@@ -1519,9 +1514,15 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
               <motion.div
                 key={`${item.title}-${pageEnterKey}`}
                 className="deck-foundation-row"
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.12 + index * 0.1, duration: 0.4 }}
+                initial={{ opacity: 0, x: -28 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.22 }}
+                transition={{
+                  duration: 0.42,
+                  delay: index * 0.08,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                whileHover={{ x: 4 }}
               >
                 <div className="deck-foundation-index">{item.no}</div>
                 <div className="deck-foundation-title">{item.title}</div>
@@ -1538,9 +1539,10 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
           <motion.div
             key={`foundation-spine-${pageEnterKey}`}
             className="deck-foundation-spine"
-            initial={{ opacity: 0, y: 24, scaleY: 0.9 }}
-            animate={{ opacity: 1, y: 0, scaleY: 1 }}
-            transition={{ delay: 0.2, duration: 0.45 }}
+            initial={{ opacity: 0, scaleY: 0.85 }}
+            whileInView={{ opacity: 1, scaleY: 1 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
           >
             <div className="deck-foundation-head" />
             <div className="deck-foundation-seg seg-1" />
@@ -1559,10 +1561,15 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
                 key={`${item.title}-${pageEnterKey}`}
                 className={`deck-dimensions-layer dim-layer-${index + 1}`}
                 style={{ background: item.color }}
-                initial={{ opacity: 0, y: 36, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: 0.12 + index * 0.1, duration: 0.42 }}
-                whileHover={{ x: 8 }}
+                initial={{ opacity: 0, y: 24, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.22 }}
+                transition={{
+                  duration: 0.42,
+                  delay: index * 0.08,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+                whileHover={{ y: -4 }}
               >
                 <span className="deck-dim-no">{item.no}</span>
                 <span className="deck-dim-title">{item.title}</span>
@@ -1570,32 +1577,17 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
             ))}
           </div>
 
-          <div className="deck-dimensions-notes">
-            <motion.div
-              className="deck-dim-note"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.32, duration: 0.35 }}
-            >
-              Team foundation
-            </motion.div>
-            <motion.div
-              className="deck-dim-note"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.42, duration: 0.35 }}
-            >
-              Process integration
-            </motion.div>
-            <motion.div
-              className="deck-dim-note"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.52, duration: 0.35 }}
-            >
-              Capability scaling
-            </motion.div>
-          </div>
+          <motion.div
+            className="deck-dimensions-notes"
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.22 }}
+            transition={{ duration: 0.45, delay: 0.18 }}
+          >
+            <div className="deck-dim-note">Team foundation</div>
+            <div className="deck-dim-note">Process integration</div>
+            <div className="deck-dim-note">Capability scaling</div>
+          </motion.div>
         </div>
       )}
     </motion.div>
@@ -1603,21 +1595,10 @@ function AppendixDeckSlide({ slide, pageEnterKey, isActive }) {
 }
 
 function AppendixHorizontalDeck() {
-  const deckRef = useRef(null);
-  const wheelLockRef = useRef(false);
-  const wheelAccumRef = useRef(0);
   const [pageEnterKey, setPageEnterKey] = useState(0);
-  const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
     setPageEnterKey((prev) => prev + 1);
-
-    if (deckRef.current) {
-      deckRef.current.scrollTo({
-        left: 0,
-        behavior: "auto"
-      });
-    }
   }, []);
 
   const slides = [
@@ -1778,164 +1759,41 @@ function AppendixHorizontalDeck() {
     }
   ];
 
-  const scrollToSlide = (index) => {
-    const rail = deckRef.current;
-    if (!rail) return;
-
-    const slideEls = Array.from(rail.querySelectorAll(".appendix-side-slide"));
-    if (!slideEls.length) return;
-
-    const clampedIndex = Math.max(0, Math.min(index, slideEls.length - 1));
-    const targetSlide = slideEls[clampedIndex];
-    if (!targetSlide) return;
-
-    setActiveSlide(clampedIndex);
-
-    rail.scrollTo({
-      left: targetSlide.offsetLeft - 4,
-      behavior: "smooth"
-    });
-  };
-
-  const scrollDeck = (direction) => {
-    if (direction === "left") {
-      scrollToSlide(activeSlide - 1);
-    } else {
-      scrollToSlide(activeSlide + 1);
-    }
-  };
-
-  useEffect(() => {
-    const rail = deckRef.current;
-    if (!rail) return;
-
-    let raf = null;
-
-    const updateActiveSlide = () => {
-      const slideEls = Array.from(rail.querySelectorAll(".appendix-side-slide"));
-      if (!slideEls.length) return;
-
-      const railCenter = rail.scrollLeft + rail.clientWidth * 0.45;
-
-      let closestIndex = 0;
-      let closestDistance = Infinity;
-
-      slideEls.forEach((slide, index) => {
-        const slideCenter = slide.offsetLeft + slide.clientWidth / 2;
-        const distance = Math.abs(slideCenter - railCenter);
-
-        if (distance < closestDistance) {
-          closestDistance = distance;
-          closestIndex = index;
-        }
-      });
-
-      setActiveSlide(closestIndex);
-    };
-
-    const onScroll = () => {
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(updateActiveSlide);
-    };
-
-    rail.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", updateActiveSlide);
-    updateActiveSlide();
-
-    return () => {
-      rail.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", updateActiveSlide);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  const handleWheel = (e) => {
-  const absX = Math.abs(e.deltaX);
-  const absY = Math.abs(e.deltaY);
-
-  const isVerticalIntent = absY > absX * 1.05;
-  const isHorizontalIntent = absX > absY * 1.05 && absX > 18;
-
-  // Let normal page up/down scrolling happen
-  if (isVerticalIntent) {
-    return;
-  }
-
-  // Ignore weak / unclear gestures
-  if (!isHorizontalIntent) {
-    return;
-  }
-
-  if (wheelLockRef.current) {
-    e.preventDefault();
-    return;
-  }
-
-  e.preventDefault();
-
-  wheelAccumRef.current += e.deltaX;
-
-  if (Math.abs(wheelAccumRef.current) < 85) {
-    return;
-  }
-
-  wheelLockRef.current = true;
-
-  const nextIndex =
-    wheelAccumRef.current > 0 ? activeSlide + 1 : activeSlide - 1;
-
-  wheelAccumRef.current = 0;
-  scrollToSlide(nextIndex);
-
-  window.setTimeout(() => {
-    wheelLockRef.current = false;
-  }, 320);
-};
-
-return (
-  <section className="appendix-deck-shell">
-    <div className="appendix-deck-head">
-      <div>
-        <span className="appendix-kicker">REFERENCE SLIDE DECK</span>
-        <h3>Horizontal Appendix Slides</h3>
-        <p>Swipe on touchpad or use arrows to move through the remaining infographic slides.</p>
-      </div>
-
-      <div className="appendix-deck-controls">
-        <button className="appendix-arrow-btn" onClick={() => scrollDeck("left")}>
-          ←
-        </button>
-        <button className="appendix-arrow-btn" onClick={() => scrollDeck("right")}>
-          →
-        </button>
-      </div>
-    </div>
-
-    <div className="appendix-rail-viewport">
-      <div className="appendix-deck-track">
-        <div
-  ref={deckRef}
-  className="appendix-side-scroll"
-  onWheel={handleWheel}
->
-          {slides.map((slide, index) => (
-            <div
-              className={`appendix-side-slide ${activeSlide === index ? "is-active" : "is-inactive"}`}
-              key={`${slide.kicker}-${pageEnterKey}-${index}`}
-            >
-              <AppendixDeckSlide
-                slide={slide}
-                pageEnterKey={`${pageEnterKey}-${activeSlide === index ? "active" : "idle"}-${index}`}
-                isActive={activeSlide === index}
-              />
-            </div>
-          ))}
+  return (
+    <section className="appendix-deck-shell appendix-deck-vertical-shell">
+      <div className="appendix-deck-head">
+        <div>
+          <span className="appendix-kicker">REFERENCE SLIDE DECK</span>
+          <h3>Appendix Slides</h3>
+          <p>Additional infographic slides shown in a vertical layout.</p>
         </div>
       </div>
-    </div>
-    <AppendixJourneyInfographic />
-  </section>
-);
+
+      <div className="appendix-vertical-stack">
+  {slides.map((slide, index) => (
+    <motion.div
+      key={`${slide.kicker}-${index}`}
+      className="appendix-vertical-item"
+      initial={{ opacity: 0, y: 50, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: false, amount: 0.22 }}
+      transition={{
+        duration: 0.55,
+        delay: index * 0.08,
+        ease: [0.22, 1, 0.36, 1]
+      }}
+      whileHover={{ y: -6 }}
+    >
+      <AppendixDeckSlide
+        slide={slide}
+        pageEnterKey={pageEnterKey}
+        isActive={true}
+      />
+    </motion.div>
+  ))}
+</div>
+    </section>
+  );
 }
 function AppendixExperience() {
   return (
@@ -1945,6 +1803,8 @@ function AppendixExperience() {
       <AppendixRiskTools />
       <AppendixTimeline />
       <AppendixPositioningFlow />
+      <AppendixJourneyInfographic />
+      <AppendixHorizontalDeck />
     </div>
   );
 }
@@ -1968,87 +1828,7 @@ export default function SectionDetail({
   const prevScene = sceneIndex > 0 ? scenes[sceneIndex - 1] : null;
   const nextScene = sceneIndex < scenes.length - 1 ? scenes[sceneIndex + 1] : null;
 
-  const touchStartXRef = useRef(0);
-  const touchStartYRef = useRef(0);
-  const touchTargetRef = useRef(null);
-  const wheelLockRef = useRef(false);
-  const wheelGestureRef = useRef({
-    deltaX: 0,
-    deltaY: 0,
-    resetTimer: null,
-    lastDirection: 0
-  });
 
-  const goNext = () => {
-    if (nextScene) setActivePage(nextScene.id);
-  };
-
-  const goPrev = () => {
-    if (prevScene) {
-      setActivePage(prevScene.id);
-    } else {
-      setActivePage("store");
-    }
-  };
-
-  const isInsideAppendixRail = (target) => {
-    return target instanceof HTMLElement && !!target.closest(".appendix-side-scroll");
-  };
-
-  const canScrollAppendixRail = (target, direction) => {
-    const rail =
-      target instanceof HTMLElement
-        ? target.closest(".appendix-side-scroll")
-        : null;
-
-    if (!rail) return false;
-
-    if (direction === "right") {
-      return rail.scrollLeft + rail.clientWidth < rail.scrollWidth - 4;
-    }
-
-    return rail.scrollLeft > 4;
-  };
-
-  const handleTouchStart = (e) => {
-    touchStartXRef.current = e.changedTouches[0].clientX;
-    touchStartYRef.current = e.changedTouches[0].clientY;
-    touchTargetRef.current = e.target;
-  };
-
-  const handleTouchEnd = (e) => {
-    const endX = e.changedTouches[0].clientX;
-    const endY = e.changedTouches[0].clientY;
-
-    const deltaX = endX - touchStartXRef.current;
-    const deltaY = endY - touchStartYRef.current;
-    const absX = Math.abs(deltaX);
-    const absY = Math.abs(deltaY);
-
-    if (absX < 72) return;
-    if (absX < absY * 1.15) return;
-
-    const startedInAppendixRail = isInsideAppendixRail(touchTargetRef.current);
-
-    if (startedInAppendixRail) {
-      if (deltaX < 0 && canScrollAppendixRail(touchTargetRef.current, "right")) return;
-      if (deltaX > 0 && canScrollAppendixRail(touchTargetRef.current, "left")) return;
-    }
-
-    if (wheelLockRef.current) return;
-
-    wheelLockRef.current = true;
-
-    if (deltaX < 0) {
-      goNext();
-    } else {
-      goPrev();
-    }
-
-    setTimeout(() => {
-      wheelLockRef.current = false;
-    }, 820);
-  };
 
   const handleWheel = (e) => {
     const target = e.target;
@@ -2125,33 +1905,36 @@ export default function SectionDetail({
   return (
     <div className="detail-page">
       <div className="top-nav-overlay">
-        <button
-          className="top-nav-btn left"
-          onClick={() =>
-            prevScene ? setActivePage(prevScene.id) : setActivePage("store")
-          }
-        >
-          {prevScene ? `← ${prevScene.title}` : "← Home"}
-        </button>
+  <button
+    className="top-nav-btn left"
+    onClick={() => (prevScene ? setActivePage(prevScene.id) : setActivePage("store"))}
+  >
+    <span
+      className="triangle-arrow left"
+      style={{ marginRight: "8px" }}
+    />
+    <span>{prevScene ? prevScene.title : "Home"}</span>
+  </button>
 
-        {nextScene && (
-          <button
-            className="top-nav-btn right"
-            onClick={() => setActivePage(nextScene.id)}
-          >
-            {nextScene.title} →
-          </button>
-        )}
-      </div>
+  {nextScene && (
+    <button
+      className="top-nav-btn right"
+      onClick={() => setActivePage(nextScene.id)}
+    >
+      <span>{nextScene.title}</span>
+      <span
+        className="triangle-arrow right"
+        style={{ marginLeft: "8px" }}
+      />
+    </button>
+  )}
+</div>
 
 <>
   <motion.div
-    className="detail-shell seamless-shell swipe-shell appendix-shell"
-    data-page={activeScene.id}
-    onTouchStart={handleTouchStart}
-    onTouchEnd={handleTouchEnd}
-    onWheel={handleWheel}
-  >
+  className="detail-shell seamless-shell swipe-shell appendix-shell"
+  data-page={activeScene.id}
+>
     <AnimatePresence mode="wait">
       <motion.div
         key={activeScene.id}
@@ -2179,9 +1962,7 @@ export default function SectionDetail({
     </AnimatePresence>
   </motion.div>
 
-  <section className="appendix-deck-breakout">
-    <AppendixHorizontalDeck />
-  </section>
+  
 </>
     </div>
   );
@@ -2194,7 +1975,11 @@ export default function SectionDetail({
     className="top-nav-btn left"
     onClick={() => (prevScene ? setActivePage(prevScene.id) : setActivePage("store"))}
   >
-    {prevScene ? `← ${prevScene.title}` : "← Home"}
+    <span
+      className="triangle-arrow left"
+      style={{ marginRight: "8px" }}
+    />
+    <span>{prevScene ? prevScene.title : "Home"}</span>
   </button>
 
   {nextScene && (
@@ -2202,17 +1987,18 @@ export default function SectionDetail({
       className="top-nav-btn right"
       onClick={() => setActivePage(nextScene.id)}
     >
-      {nextScene.title} →
+      <span>{nextScene.title}</span>
+      <span
+        className="triangle-arrow right"
+        style={{ marginLeft: "8px" }}
+      />
     </button>
   )}
 </div>
       <motion.div
-        className="detail-shell seamless-shell swipe-shell"
-        data-page={activeScene.id}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onWheel={handleWheel}
-      >
+  className="detail-shell seamless-shell swipe-shell"
+  data-page={activeScene.id}
+>
         <AnimatePresence mode="wait">
           <motion.div
             key={activeScene.id}

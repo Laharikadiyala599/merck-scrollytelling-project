@@ -6,22 +6,23 @@ export default function Navbar({
   setActivePage,
   activePage,
   onHomeClick,
-  onChatToggle
+  onChatOpen,
+  onChatClose
 }) {
   return (
     <div className="navbar apple-navbar">
       <div className="nav-left">
         <button
-  type="button"
-  className="logo apple-logo"
-  onClick={onHomeClick}
->
-  <img
-    src="/logo.png"
-    alt={siteConfig.companyName || "Logo"}
-    className="logo-img"
-  />
-</button>
+          type="button"
+          className="logo apple-logo"
+          onClick={onHomeClick}
+        >
+          <img
+            src="/logo.png"
+            alt={siteConfig.companyName || "Logo"}
+            className="logo-img"
+          />
+        </button>
 
         <div className="nav-items apple-nav-items">
           {scenes.map((scene) => (
@@ -32,29 +33,19 @@ export default function Navbar({
               onMouseLeave={() => setHoveredNav(null)}
             >
               <span
-  className={`nav-item apple-nav-item ${
-    activePage === scene.id ? "active-nav-item" : ""
-  }`}
-  onClick={() => setActivePage(scene.id)}
->
-  {scene.title}
-</span>
+                className={`nav-item apple-nav-item ${
+                  activePage === scene.id ? "active-nav-item" : ""
+                }`}
+                onClick={() => setActivePage(scene.id)}
+              >
+                {scene.title}
+              </span>
 
               {hoveredNav === scene.id && (
                 <div className="nav-dropdown apple-nav-dropdown">
                   <p className="dropdown-kicker">{scene.title}</p>
                   <h4>{scene.hero?.heading}</h4>
                   <p className="dropdown-text">{scene.hero?.description}</p>
-
-                  {scene.subnav?.length > 0 && (
-                    <div className="dropdown-links">
-                      {scene.subnav.slice(0, 4).map((item, index) => (
-                        <span key={index} className="dropdown-link">
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  )}
                 </div>
               )}
             </div>
@@ -67,9 +58,10 @@ export default function Navbar({
           src="/right-logo.png"
           alt="chat"
           className="right-logo"
-          onClick={onChatToggle}
+          onClick={onChatOpen}
+          onDoubleClick={onChatClose}
         />
       </div>
     </div>
   );
-}
+}   

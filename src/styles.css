@@ -1908,10 +1908,10 @@ footer {
 }
 
 .appendix-flow-item {
-  flex: 0 0 360px;
-  width: 360px;
-  min-width: 360px;
-  max-width: 360px;
+  flex: 0 0 300px;
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
   min-height: 230px;
   position: relative;
   overflow: hidden;
@@ -3314,7 +3314,7 @@ footer {
 .appendix-deck-slide {
   background: linear-gradient(180deg, #f6f8fc 0%, #eef2f8 100%);
   border-radius: 30px;
-  min-height: 720px;
+  min-height: 520px;
   padding: 26px 28px 30px;
   box-shadow: 0 20px 60px rgba(15, 23, 42, 0.12);
   transition:
@@ -5318,183 +5318,7 @@ body {
 .appendix-deck-breakout .appendix-side-scroll {
   scrollbar-width: none;
 }
-/* =========================
-   APPENDIX HORIZONTAL DECK FIX
-   ========================= */
 
-.appendix-deck-breakout {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-top: 40px;
-  position: relative;
-}
-
-.appendix-deck-shell {
-  width: 100%;
-  padding: 0 28px 12px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.appendix-deck-head {
-  max-width: 1480px;
-  margin: 0 auto 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 18px;
-}
-
-/* 🔥 MAIN FIX: only horizontal scroll */
-.appendix-side-scroll {
-  display: flex;
-  align-items: stretch;
-  gap: 24px;
-  overflow-x: auto;
-  overflow-y: hidden;   /* IMPORTANT */
-  padding: 6px 0 20px;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-}
-
-.appendix-side-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-/* 🔥 EACH CARD = FIXED SLIDE */
-.appendix-side-slide {
-  flex: 0 0 75%;
-  min-width: 75%;
-  max-width: 75%;
-  height: 750px;              /* IMPORTANT */
-  scroll-snap-align: start;
-  overflow: hidden;           /* IMPORTANT */
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.appendix-side-slide.is-inactive {
-  opacity: 0.7;
-  transform: scale(0.96);
-}
-
-.appendix-side-slide.is-active {
-  opacity: 1;
-  transform: scale(1);
-}
-
-/* 🔥 CARD CONTENT */
-.appendix-deck-slide {
-  height: 100%;
-  overflow: hidden;           /* IMPORTANT */
-  border-radius: 30px;
-  background: linear-gradient(180deg, #ffffff 0%, #f5f7fb 100%);
-  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.12);
-  padding: 28px 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* prevent vertical leak */
-.performance-driver-stage,
-.risk-overlap-stage,
-.brand-compare-stage,
-.deck-foundation-layout,
-.deck-dimensions-layout {
-  flex: 1;
-  overflow: hidden;
-}
-/* ===== FINAL HORIZONTAL DECK LOCK ===== */
-
-.appendix-deck-breakout {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-top: 44px;
-  position: relative;
-  overflow: hidden;
-}
-
-.appendix-deck-shell {
-  width: 100%;
-  padding: 0 28px 18px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-.appendix-rail-viewport {
-  width: 100%;
-  overflow: hidden; /* hides vertical leak */
-  position: relative;
-}
-
-.appendix-side-scroll {
-  display: flex;
-  align-items: stretch;
-  gap: 24px;
-  overflow-x: auto;
-  overflow-y: hidden !important;
-  padding: 8px 0 20px;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
-  overscroll-behavior-x: contain;
-  overscroll-behavior-y: contain;
-  scrollbar-width: none;
-}
-
-.appendix-side-scroll::-webkit-scrollbar {
-  display: none;
-}
-
-.appendix-side-slide {
-  flex: 0 0 76%;
-  min-width: 76%;
-  max-width: 76%;
-  height: 760px;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  overflow: hidden !important;
-  position: relative;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.appendix-side-slide.is-inactive {
-  opacity: 0.72;
-  transform: scale(0.965);
-}
-
-.appendix-side-slide.is-active {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.appendix-deck-slide {
-  height: 760px;
-  min-height: 760px;
-  max-height: 760px;
-  overflow: hidden !important;
-  border-radius: 32px;
-  background: linear-gradient(180deg, #ffffff 0%, #f5f7fb 100%);
-  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.12);
-  padding: 28px 30px 30px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-}
-
-.appendix-deck-slide .appendix-block-head {
-  flex: 0 0 auto;
-}
-
-.performance-driver-stage,
-.risk-overlap-stage,
-.brand-compare-stage,
-.deck-foundation-layout,
-.deck-dimensions-layout {
-  flex: 1 1 auto;
-  min-height: 0;
-  max-height: 100%;
-  overflow: hidden !important;
-}
 /* ===== FINAL DESKTOP FIX: horizontal rail + vertical scroll inside card ===== */
 @media (min-width: 769px) {
   .appendix-deck-breakout {
@@ -6091,17 +5915,16 @@ body {
 
 .journey-path {
   fill: none;
-  stroke: rgba(148, 163, 184, 0.28);
-  stroke-width: 5;
+  stroke: rgba(167, 167, 245, 0.95);
+  stroke-width: 6;
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-dasharray: 1200;
-  stroke-dashoffset: 1200;
-  transition: stroke-dashoffset 0.8s ease, stroke 0.4s ease;
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  transition: stroke-dashoffset 0.8s ease, opacity 0.3s ease;
 }
 
 .journey-path.is-active {
-  stroke: rgba(99, 102, 241, 0.45);
   stroke-dashoffset: 0;
 }
 
@@ -6337,4 +6160,983 @@ body {
 .appendix-journey-section {
   position: relative;
   z-index: 1;
+}
+/* MERCK heading style */
+
+.merck-heading {
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  font-weight: 800;
+  font-size: 72px;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+
+  color: #009688; /* teal color */
+
+  margin: 0;
+  line-height: 1;
+}
+.right-logo {
+  cursor: pointer;
+  user-select: none;
+}
+.appendix-arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* =========================
+   TRIANGLE ARROWS (CLEAN)
+   ========================= */
+
+.triangle-arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  flex: 0 0 auto;
+}
+
+/* LEFT ◀ */
+.triangle-arrow.left {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 16px solid #111;
+}
+
+/* RIGHT ▶ */
+.triangle-arrow.right {
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left: 16px solid #111;
+}
+
+/* BUTTON ALIGNMENT */
+.top-nav-btn,
+.appendix-arrow-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+html,
+body,
+#root,
+.app {
+  overscroll-behavior-x: none;
+}
+
+body {
+  overflow-x: hidden;
+}
+.swipe-shell,
+.detail-shell,
+.appendix-shell {
+  overscroll-behavior-x: none;
+}
+/* =========================================
+   APPENDIX HORIZONTAL DECK - UNIFIED SIZE
+   ========================================= */
+
+.appendix-side-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: stretch;
+}
+
+.appendix-deck-slide {
+  width: 100%;
+  min-height: 720px;
+  height: 720px;
+  max-height: 720px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.appendix-deck-slide .appendix-block-head {
+  flex: 0 0 auto;
+  margin-bottom: 18px;
+}
+
+.appendix-deck-slide > *:not(.appendix-block-head) {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.performance-driver-stage,
+.risk-overlap-stage,
+.brand-compare-stage,
+.deck-foundation-layout,
+.deck-dimensions-layout {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  transform: scale(0.92);
+  transform-origin: top center;
+}
+.journey-step-number {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+  border: 4px solid currentColor;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+  color: inherit;
+  cursor: default;
+}
+
+.journey-step-number:disabled {
+  opacity: 1;
+}
+
+.journey-step.is-clickable .journey-step-number {
+  cursor: pointer;
+  animation: journeyPulse 1.2s infinite;
+}
+
+.journey-step.is-clickable .journey-step-number:hover {
+  transform: scale(1.06);
+}
+.appendix-journey-stage {
+  position: relative;
+  min-height: 760px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(255,255,255,0.95), rgba(248,250,252,0.92)),
+    linear-gradient(180deg, #fdfdfd 0%, #f8fafc 100%);
+  overflow: hidden;
+}
+
+.appendix-journey-paths {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.journey-path {
+  fill: none;
+  stroke: rgba(167, 167, 245, 0.95);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1600;
+  stroke-dashoffset: 1600;
+  transition: stroke-dashoffset 0.75s ease, opacity 0.25s ease;
+}
+
+.journey-path.is-active {
+  stroke-dashoffset: 0;
+}
+
+.journey-step {
+  position: absolute;
+  z-index: 2;
+  width: 250px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.journey-step-icon {
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  font-size: 34px;
+  background: #fff;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
+}
+
+.journey-step-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.journey-step-number {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  border: 4px solid currentColor;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+  color: inherit;
+}
+
+.journey-step-content h3 {
+  margin: 0 0 8px;
+  font-size: 26px;
+  line-height: 1.08;
+  color: #334155;
+}
+
+.journey-step-content p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #5b6472;
+}
+.journey-step {
+  width: 230px;
+}
+.journey-step-content h3 {
+  line-height: 1.12;
+}
+/* FIX: Remove bottom empty space in appendix slides */
+
+.appendix-deck-slide {
+  height: auto !important;
+  min-height: 460px !important; /* keeps structure but removes extra gap */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* spreads content properly */
+}
+
+/* tighten inner layout */
+.performance-driver-stage,
+.risk-overlap-stage,
+.brand-compare-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center content vertically */
+}
+
+/* reduce bottom spacing of cards */
+.performance-driver-card {
+  margin-bottom: 0 !important;
+  padding-bottom: 12px;
+}
+
+/* reduce extra spacing from rows */
+.performance-driver-row {
+  gap: 16px; /* was bigger */
+  margin-bottom: 0 !important;
+}/* FIX: remove extra top space in appendix slides */
+
+.appendix-deck-slide {
+  padding-top: 16px !important;   /* reduce top padding */
+}
+
+/* header spacing fix */
+.appendix-block-head {
+  margin-top: 0 !important;
+  margin-bottom: 12px !important;
+}
+
+/* remove extra space from kicker/title */
+.appendix-kicker {
+  margin-bottom: 4px !important;
+}
+
+.appendix-block-head h3 {
+  margin: 4px 0 6px 0 !important;
+}
+
+.appendix-block-head p {
+  margin: 0 !important;
+}
+/* ===== FINAL APPENDIX DESKTOP FIX — NO CUTTING ===== */
+@media (min-width: 769px) {
+  .appendix-side-slide {
+    flex: 0 0 76% !important;
+    min-width: 76% !important;
+    max-width: 76% !important;
+    min-height: 760px !important;
+    height: auto !important;
+    overflow: visible !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: always !important;
+    position: relative !important;
+  }
+
+  .appendix-deck-slide {
+    min-height: 760px !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
+    overflow-x: visible !important;
+    border-radius: 32px !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f7fb 100%) !important;
+    box-shadow: 0 24px 64px rgba(15, 23, 42, 0.12) !important;
+    padding: 24px 28px 24px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .appendix-deck-slide .appendix-block-head {
+    flex: 0 0 auto !important;
+    margin-bottom: 12px !important;
+  }
+
+  .performance-driver-stage,
+  .risk-overlap-stage,
+  .brand-compare-stage,
+  .deck-foundation-layout,
+  .deck-dimensions-layout {
+    flex: 0 0 auto !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .appendix-side-scroll {
+    align-items: flex-start !important;
+    overflow-y: hidden !important;
+    padding: 4px 0 14px !important;
+  }
+}
+
+
+  /* make larger layouts slightly scale down so all cards feel equal */
+  .performance-driver-stage {
+    transform: scale(0.94);
+    transform-origin: center center;
+  }
+
+  .risk-overlap-stage {
+    transform: scale(0.92);
+    transform-origin: center center;
+  }
+
+  .brand-compare-stage {
+    transform: scale(0.93);
+    transform-origin: center center;
+  }
+
+  .deck-foundation-layout {
+    transform: scale(0.95);
+    transform-origin: center center;
+  }
+
+  .deck-dimensions-layout {
+    transform: scale(0.96);
+    transform-origin: center center;
+  }
+
+/* appendix deck: arrows only, no swipe behavior */
+.appendix-side-scroll {
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  touch-action: auto !important;
+}
+/* ===== appendix: fit full diagram inside fixed card ===== */
+@media (min-width: 769px) {
+  .appendix-side-slide {
+    flex: 0 0 76% !important;
+    min-width: 76% !important;
+    max-width: 76% !important;
+    height: 720px !important;
+    min-height: 720px !important;
+    max-height: 720px !important;
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
+  .appendix-deck-slide {
+    width: 100% !important;
+    height: 720px !important;
+    min-height: 720px !important;
+    max-height: 720px !important;
+    padding: 22px 24px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .appendix-deck-slide .appendix-block-head {
+    flex: 0 0 auto !important;
+    margin-bottom: 10px !important;
+  }
+
+  .performance-driver-stage,
+  .risk-overlap-stage,
+  .brand-compare-stage,
+  .deck-foundation-layout,
+  .deck-dimensions-layout {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+
+  /* fit each diagram fully inside card */
+  .performance-driver-stage { transform: scale(0.86); transform-origin: center center; }
+  .risk-overlap-stage { transform: scale(0.84); transform-origin: center center; }
+  .brand-compare-stage { transform: scale(0.85); transform-origin: center center; }
+  .deck-foundation-layout { transform: scale(0.90); transform-origin: center center; }
+  .deck-dimensions-layout { transform: scale(0.92); transform-origin: center center; }
+}
+/* =========================================================
+   FINAL CLEAN APPENDIX HORIZONTAL DECK
+   ========================================================= */
+
+.appendix-deck-breakout {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-top: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.appendix-deck-shell {
+  width: 100%;
+  padding: 0 28px 18px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.appendix-deck-head {
+  max-width: 1480px;
+  margin: 0 auto 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.appendix-deck-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.appendix-arrow-btn {
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.appendix-rail-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.appendix-deck-track {
+  width: 100%;
+}
+
+.appendix-side-scroll {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 8px 0 20px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.appendix-side-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.appendix-side-slide {
+  flex: 0 0 76%;
+  min-width: 76%;
+  max-width: 76%;
+  height: 760px;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  overflow: hidden;
+}
+
+.appendix-side-slide.is-inactive {
+  opacity: 0.78;
+  transform: scale(0.97);
+}
+
+.appendix-side-slide.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.appendix-deck-slide {
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  border-radius: 32px;
+  background: linear-gradient(180deg, #ffffff 0%, #f5f7fb 100%);
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.12);
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.appendix-deck-slide .appendix-block-head {
+  flex: 0 0 auto;
+  margin-bottom: 12px;
+}
+
+.appendix-deck-slide .appendix-block-head h3 {
+  margin-bottom: 8px;
+}
+
+.appendix-deck-slide .appendix-block-head p {
+  margin-bottom: 0;
+}
+
+.performance-driver-stage,
+.risk-overlap-stage,
+.brand-compare-stage,
+.deck-foundation-layout,
+.deck-dimensions-layout {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 6px 4px 8px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 116, 139, 0.35) transparent;
+}
+
+/* inner scrollbars */
+.performance-driver-stage::-webkit-scrollbar,
+.risk-overlap-stage::-webkit-scrollbar,
+.brand-compare-stage::-webkit-scrollbar,
+.deck-foundation-layout::-webkit-scrollbar,
+.deck-dimensions-layout::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.performance-driver-stage::-webkit-scrollbar-thumb,
+.risk-overlap-stage::-webkit-scrollbar-thumb,
+.brand-compare-stage::-webkit-scrollbar-thumb,
+.deck-foundation-layout::-webkit-scrollbar-thumb,
+.deck-dimensions-layout::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.35);
+  border-radius: 999px;
+}
+
+/* equal usable canvas for all five layouts */
+.performance-driver-stage,
+.risk-overlap-stage,
+.brand-compare-stage {
+  min-width: 1080px;
+  min-height: 510px;
+}
+
+.deck-foundation-layout {
+  min-width: 1040px;
+  min-height: 510px;
+}
+
+.deck-dimensions-layout {
+  min-width: 900px;
+  min-height: 510px;
+}
+
+/* keep your active-slide float effect */
+.deck-slide-idle {
+  transform: translateY(8px);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+}
+
+.deck-slide-active {
+  transform: translateY(0);
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.16);
+}
+
+.appendix-side-slide.is-active .appendix-block-head,
+.appendix-side-slide.is-active .risk-overlap-stage,
+.appendix-side-slide.is-active .brand-compare-stage,
+.appendix-side-slide.is-active .deck-foundation-layout,
+.appendix-side-slide.is-active .deck-dimensions-layout,
+.appendix-side-slide.is-active .performance-driver-stage {
+  animation: appendixFloatIn 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes appendixFloatIn {
+  0% {
+    opacity: 0.72;
+    transform: translateY(34px) scale(0.97);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* responsive */
+@media (max-width: 1024px) {
+  .appendix-side-slide {
+    flex: 0 0 88%;
+    min-width: 88%;
+    max-width: 88%;
+    height: 700px;
+  }
+
+  .appendix-deck-slide {
+    padding: 20px 20px 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .appendix-deck-breakout {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .appendix-deck-shell {
+    padding: 0 0 12px;
+  }
+
+  .appendix-deck-head {
+    padding: 0 12px;
+  }
+
+  .appendix-side-scroll {
+    padding: 8px 12px 18px;
+  }
+
+  .appendix-side-slide {
+    flex: 0 0 94%;
+    min-width: 94%;
+    max-width: 94%;
+    height: auto;
+    min-height: 620px;
+  }
+
+  .appendix-deck-slide {
+    height: auto;
+    min-height: 620px;
+    overflow: visible;
+  }
+
+  .performance-driver-stage,
+  .risk-overlap-stage,
+  .brand-compare-stage,
+  .deck-foundation-layout,
+  .deck-dimensions-layout {
+    min-width: 0;
+    min-height: 0;
+    overflow: visible;
+  }
+}
+/* =========================================
+   ENABLE FULL SCROLL INSIDE EACH SLIDE
+   ========================================= */
+
+.performance-driver-stage,
+.risk-overlap-stage,
+.brand-compare-stage,
+.deck-foundation-layout,
+.deck-dimensions-layout {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+
+  /* THIS IS THE KEY */
+  overflow: auto !important;
+
+  /* smooth scrolling */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  /* padding so content not cut */
+  padding: 8px 8px 12px !important;
+
+  /* allow both directions */
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+}
+/* =========================================================
+   FINAL FIX — STABLE HORIZONTAL DECK + INNER SCROLL
+   (DO NOT EDIT ANYTHING ABOVE — THIS OVERRIDES ALL)
+   ========================================================= */
+
+.appendix-side-slide {
+  flex: 0 0 76% !important;
+  min-width: 76% !important;
+  max-width: 76% !important;
+  height: 760px !important;
+  position: relative !important;
+
+  /* IMPORTANT: do NOT clip */
+  overflow: visible !important;
+}
+
+.appendix-deck-slide {
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  padding: 24px !important;
+  border-radius: 32px !important;
+
+  /* IMPORTANT: allow inner scroll */
+  overflow: visible !important;
+}
+
+/* =========================================================
+   INNER DIAGRAM SCROLL (THIS IS THE REAL FIX)
+   ========================================================= */
+
+.performance-driver-stage,
+.risk-overlap-stage,
+.brand-compare-stage,
+.deck-foundation-layout,
+.deck-dimensions-layout {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+
+  /* enable scroll */
+  overflow: auto !important;
+
+  /* allow both directions */
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+
+  /* smooth scroll */
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important;
+
+  padding: 10px !important;
+  box-sizing: border-box !important;
+}
+
+/* =========================================================
+   SCROLLBAR (CLEAN LOOK)
+   ========================================================= */
+
+.performance-driver-stage::-webkit-scrollbar,
+.risk-overlap-stage::-webkit-scrollbar,
+.brand-compare-stage::-webkit-scrollbar,
+.deck-foundation-layout::-webkit-scrollbar,
+.deck-dimensions-layout::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.performance-driver-stage::-webkit-scrollbar-thumb,
+.risk-overlap-stage::-webkit-scrollbar-thumb,
+.brand-compare-stage::-webkit-scrollbar-thumb,
+.deck-foundation-layout::-webkit-scrollbar-thumb,
+.deck-dimensions-layout::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 999px;
+}
+
+/* =========================================================
+   KEEP HORIZONTAL DECK SMOOTH
+   ========================================================= */
+
+.appendix-side-scroll {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-behavior: smooth !important;
+}
+/* =========================================================
+   REAL FINAL FIX — CURRENT SLIDE MUST SCROLL VERTICALLY
+   ========================================================= */
+
+@media (min-width: 769px) {
+  /* keep the outer horizontal rail */
+  .appendix-side-scroll {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+
+  /* fixed card size */
+  .appendix-side-slide {
+    flex: 0 0 76% !important;
+    min-width: 76% !important;
+    max-width: 76% !important;
+    height: 760px !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  /* THIS is the vertical scroll container */
+  .appendix-deck-slide {
+    height: 760px !important;
+    min-height: 760px !important;
+    max-height: 760px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    box-sizing: border-box !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(100, 116, 139, 0.35) transparent !important;
+  }
+
+  .appendix-deck-slide::-webkit-scrollbar {
+    width: 8px !important;
+  }
+
+  .appendix-deck-slide::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.35) !important;
+    border-radius: 999px !important;
+  }
+
+  /* inner diagrams should NOT trap scroll */
+  .performance-driver-stage,
+  .risk-overlap-stage,
+  .brand-compare-stage,
+  .deck-foundation-layout,
+  .deck-dimensions-layout {
+    flex: 0 0 auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+/* =========================================================
+   APPENDIX HORIZONTAL DECK -> VERTICAL STACK
+   ========================================================= */
+
+.appendix-deck-vertical-shell {
+  overflow: visible !important;
+}
+
+.appendix-vertical-stack {
+  display: grid;
+  gap: 28px;
+  margin-top: 18px;
+}
+
+.appendix-vertical-item {
+  width: 100%;
+}
+
+.appendix-vertical-item .appendix-deck-slide {
+  width: 100%;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 26px 28px !important;
+  border-radius: 32px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.10);
+}
+
+.appendix-vertical-item .appendix-block-head {
+  margin-bottom: 18px !important;
+}
+
+.appendix-vertical-item .performance-driver-stage,
+.appendix-vertical-item .risk-overlap-stage,
+.appendix-vertical-item .brand-compare-stage,
+.appendix-vertical-item .deck-foundation-layout,
+.appendix-vertical-item .deck-dimensions-layout {
+  min-height: auto !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 10px 0 6px !important;
+}
+
+/* disable old horizontal deck behavior */
+.appendix-side-scroll,
+.appendix-side-slide {
+  display: block !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.appendix-deck-controls {
+  display: none !important;
+}
+/* =========================================
+   APPENDIX 06–10 ANIMATION POLISH
+   ========================================= */
+
+.appendix-vertical-stack {
+  display: grid;
+  gap: 28px;
+  margin-top: 18px;
+}
+
+.appendix-vertical-item {
+  will-change: transform, opacity;
+}
+
+.appendix-vertical-item .appendix-deck-slide {
+  border-radius: 32px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.10);
+  transition: box-shadow 0.28s ease, transform 0.28s ease;
+}
+
+.appendix-vertical-item:hover .appendix-deck-slide {
+  box-shadow: 0 28px 72px rgba(15, 23, 42, 0.14);
+}
+
+/* animate inner infographic pieces a little */
+.appendix-vertical-item .performance-driver-stage,
+.appendix-vertical-item .risk-overlap-stage,
+.appendix-vertical-item .brand-compare-stage,
+.appendix-vertical-item .deck-foundation-layout,
+.appendix-vertical-item .deck-dimensions-layout {
+  animation: appendixStageFloatIn 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes appendixStageFloatIn {
+  0% {
+    opacity: 0.72;
+    transform: translateY(22px) scale(0.985);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }

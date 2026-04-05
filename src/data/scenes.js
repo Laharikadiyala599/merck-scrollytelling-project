@@ -2,7 +2,7 @@ export const scenes = [
   {
     id: "Summary",
     title: "Summary",
-    cardLayout: "two-top-one-wide",
+    cardLayout: "three-horizontal",
     pageTitle: "Summary",
     theme: {
       icon: "layoutDashboard",
@@ -227,7 +227,7 @@ export const scenes = [
   {
     id: "launches",
     title: "Launches",
-    cardLayout: "one-wide-two-bottom",
+    cardLayout: "three-vertical",
     pageTitle: "Launches",
     theme: {
       icon: "rocket",
@@ -377,6 +377,7 @@ export const scenes = [
     id: "research",
     title: "Research",
     pageTitle: "Research",
+    cardLayout: "three-vertical",
     theme: {
       icon: "flask",
       tone: "cyan"
@@ -449,6 +450,7 @@ export const scenes = [
     id: "healthcare",
     title: "Healthcare",
     pageTitle: "Healthcare",
+    cardLayout: "three-horizontal",
     theme: {
       icon: "stethoscope",
       tone: "red"
@@ -521,6 +523,7 @@ export const scenes = [
     id: "analytics",
     title: "Analytics",
     pageTitle: "Analytics",
+    cardLayout: "three-vertical",
     theme: {
       icon: "barChart",
       tone: "indigo"
@@ -595,6 +598,7 @@ export const scenes = [
     id: "global",
     title: "Global",
     pageTitle: "Global",
+    cardLayout: "horizontal",
     theme: {
       icon: "globe",
       tone: "teal"

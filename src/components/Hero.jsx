@@ -9,9 +9,7 @@ export default function Hero({ siteConfig }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.65, ease: "easeOut" }}
       >
-        <h1 className="apple-hero-compact-title">
-          Mer<span>ck</span>
-        </h1>
+        <h1 className="merck-heading">{siteConfig.heroTitle}</h1>
 
         <p className="apple-hero-compact-text">
           {siteConfig.heroDescription}
