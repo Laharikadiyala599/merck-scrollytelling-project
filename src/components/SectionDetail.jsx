@@ -2,6 +2,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import AppendixJourneyInfographic from "./AppendixJourneyInfographic";
+import TreatmentJourneyInfographic from "./TreatmentJourneyInfographic";
+import EmergencyJourneyMap from "./EmergencyJourneyMap";
+
 import {
   ResponsiveContainer,
   BarChart,
@@ -2034,11 +2037,15 @@ export default function SectionDetail({
               <span>{activeScene.sectionTitle?.light || "Take your pick."}</span>
             </motion.h2>
 
-            <InfographicRenderer
-              scene={activeScene}
-              onHoverStart={handleHoverStart}
-              onHoverEnd={handleHoverEnd}
-            />
+            {activeScene.id === "journey" ? (
+  <TreatmentJourneyInfographic />
+) : (
+  <InfographicRenderer
+    scene={activeScene}
+    onHoverStart={handleHoverStart}
+    onHoverEnd={handleHoverEnd}
+  />
+)}
 
             <motion.div
               initial={{ opacity: 0, y: 10 }}

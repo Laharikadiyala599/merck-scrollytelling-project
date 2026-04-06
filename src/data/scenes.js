@@ -654,6 +654,29 @@ export const scenes = [
 ]
   },
 {
+  id: "journey",
+  title: "Journey",
+  pageTitle: "Journey",
+  theme: {
+    tone: "cyan",
+    icon: "globe"
+  },
+  narration:
+    "This patient journey map shows the typical path from symptom onset to physician consultation, specialist evaluation, testing, diagnosis confirmation, and treatment initiation. Each step highlights how patients move through the care pathway and where support, communication, and intervention matter most.",
+  hero: {
+    tag: "JOURNEY",
+    heading: "Journey",
+    description: "A typical treatment journey from symptoms to follow-up care."
+  },
+  sectionTitle: {
+    bold: "Journey.",
+    light: "Understanding the treatment path."
+  },
+  cards: [],
+  infographic: null,
+  visual: null
+},
+{
   id: "appendix",
   title: "Appendix",
   pageTitle: "Appendix",
