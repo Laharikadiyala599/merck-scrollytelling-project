@@ -53,14 +53,12 @@ export default function PromoCards({
 
       <div className="apple-large-grid">
         {rest.map((scene, index) => {
-          const isAppendix = scene.id === "appendix";
+          
 
           return (
             <motion.div
               key={scene.id}
-              className={
-                isAppendix ? "apple-appendix-wide-card" : "apple-large-card"
-              }
+              className="apple-large-card"
               layoutId={`card-${scene.id}`}
               onClick={() => setActivePage(scene.id)}
               initial={{ opacity: 0, y: 18 }}
@@ -69,21 +67,13 @@ export default function PromoCards({
               whileHover={{ y: -6 }}
             >
               <div
-                className={
-                  isAppendix
-                    ? "apple-appendix-image-wrap"
-                    : "apple-large-image-wrap"
-                }
+                className="apple-large-image-wrap"
               >
                 {scene.image ? (
                   <img
                     src={scene.image}
                     alt={scene.title}
-                    className={
-                      isAppendix
-                        ? "apple-appendix-image"
-                        : "apple-large-image"
-                    }
+                    className="apple-large-image"
                   />
                 ) : (
                   <div className="apple-large-image placeholder-card">
@@ -93,11 +83,7 @@ export default function PromoCards({
               </div>
 
               <div
-                className={
-                  isAppendix
-                    ? "apple-appendix-content"
-                    : "apple-large-content"
-                }
+                className="apple-large-content"
               >
                 <span className="promo-tag">{scene.hero?.tag || "NEW"}</span>
                 <h3>{scene.hero?.heading}</h3>
