@@ -7221,10 +7221,13 @@ body {
 
 .journey-road-main {
   fill: none;
-  stroke: rgba(170, 163, 150, 0.42);
+  stroke: rgba(170, 163, 150, 0.12); /* faint default */
   stroke-width: 36;
   stroke-linecap: round;
-  stroke-linejoin: round;
+  transition: stroke 0.4s ease, opacity 0.4s ease;
+}
+.journey-road-main.active {
+  stroke: rgba(170, 163, 150, 0.45); /* visible when active */
 }
 
 .journey-doodle {

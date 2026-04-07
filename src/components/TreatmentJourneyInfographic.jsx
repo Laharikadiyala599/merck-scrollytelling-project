@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { image } from "framer-motion/client";
 import EmergencyJourneyMap from "./EmergencyJourneyMap";
 
 /* =========================
@@ -94,25 +93,24 @@ function buildCurve(from, to) {
 /* =========================
    COMPONENT
    ========================= */
-export default function TreatmentJourneyInfographic() {
+export default function TreatmentJourneyInfographic({ isVoiceEnabled = true }) {
   const [activeStep, setActiveStep] = useState(1);
   const [unlockedStep, setUnlockedStep] = useState(1);
-  const playNarration = (text) => {
-  const speech = new SpeechSynthesisUtterance(text);
-  speech.rate = 0.95;
-  speech.pitch = 1;
-  speech.lang = "en-US";
 
-  window.speechSynthesis.cancel(); // stop previous audio
-  window.speechSynthesis.speak(speech);
-};
-  const scrollRef = useRef(null);
+ const scrollRef = useRef(null);
 const stepRefs = useRef({});
 
-  const nextStep = useMemo(
+const nextStep = useMemo(
   () => (unlockedStep < steps.length ? unlockedStep : null),
   [unlockedStep]
 );
+
+useEffect(() => {
+  if (!isVoiceEnabled) {
+    window.speechSynthesis.cancel();
+  }
+}, [isVoiceEnabled]);
+
 useEffect(() => {
   if (!scrollRef.current) return;
   if (!nextStep) return;
@@ -126,6 +124,17 @@ useEffect(() => {
     inline: "center"
   });
 }, [nextStep]);
+   const playNarration = (text) => {
+    if (!isVoiceEnabled) return;
+
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 0.95;
+    speech.pitch = 1;
+    speech.lang = "en-US";
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech);
+  };
   const handleClick = (step) => {
     if (step.id > unlockedStep) return;
 
@@ -167,16 +176,16 @@ useEffect(() => {
 
               return (
                 <motion.path
-                  key={step.id}
-                  d={buildCurve(prev, step)}
-                  fill="none"
-                  stroke={visible ? "#b6b1a5" : "#ddd"}
-                  strokeWidth="30"
-                  strokeLinecap="round"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: visible ? 1 : 0.2 }}
-                  transition={{ duration: 0.6 }}
-                />
+  key={step.id}
+  d={buildCurve(prev, step)}
+  fill="none"
+  stroke={visible ? "#b6b1a5" : "transparent"}
+  strokeWidth="30"
+  strokeLinecap="round"
+  initial={{ pathLength: 0 }}
+  animate={{ pathLength: visible ? 1 : 0 }}
+  transition={{ duration: 0.6 }}
+/>
               );
             })}
           </svg>
@@ -189,6 +198,13 @@ useEffect(() => {
 
             return (
              <div key={step.id}>
+                <div
+      className={`journey-step-arc ${isActive ? "active" : ""}`}
+      style={{
+        left: `${step.x - 20}px`,
+        top: `${step.y - 6}px`
+      }}
+    />
   <motion.button
     ref={(el) => {
       if (el) stepRefs.current[step.id] = el;

@@ -662,7 +662,7 @@ export const scenes = [
     icon: "globe"
   },
   narration:
-    "This patient journey maps",
+    "Welcome to the journey maps",
   hero: {
     tag: "JOURNEY",
     heading: "Journey",

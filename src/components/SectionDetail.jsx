@@ -1818,8 +1818,10 @@ function AppendixExperience() {
 
 export default function SectionDetail({
   activeScene,
+  scenes,
   setActivePage,
-  setHoverSpeechText
+  setHoverSpeechText,
+  isVoiceEnabled
 }) {
   const [hoverText, setHoverText] = useState("");
 
@@ -2038,7 +2040,7 @@ export default function SectionDetail({
             </motion.h2>
 
             {activeScene.id === "journey" ? (
-  <TreatmentJourneyInfographic />
+  <TreatmentJourneyInfographic isVoiceEnabled={isVoiceEnabled} />
 ) : (
   <InfographicRenderer
     scene={activeScene}

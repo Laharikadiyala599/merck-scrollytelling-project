@@ -228,12 +228,13 @@ export default function App() {
             </motion.div>
           ) : (
             <SectionDetail
-              key={activeScene?.id}
-              activeScene={activeScene}
-              scenes={scenes}
-              setActivePage={setActivePage}
-              setHoverSpeechText={setHoverSpeechText}
-            />
+  key={activeScene?.id}
+  activeScene={activeScene}
+  scenes={scenes}
+  setActivePage={setActivePage}
+  setHoverSpeechText={setHoverSpeechText}
+  isVoiceEnabled={isVoiceEnabled}
+/>
           )}
         </AnimatePresence>
 
